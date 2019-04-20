@@ -1,4 +1,1 @@
-"Esta é a minha primeira feature"
-"Finish"
-"Testando novamente"
-
+This is a test
