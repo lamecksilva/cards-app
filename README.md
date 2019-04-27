@@ -1,9 +1,15 @@
-### Testing git
+### _Cards App_
 
----
+Repositório para um app de cadastrar cards
 
-Hello World
+#### Tecnologias Usadas:
 
-New Feature here
+- Git
+- Git Flow
+- Docker
+- Node.js (Express.js)
+- React.js
+- Redux
+- ESLint
 
-Modification here
+E mais algumas outras que aparecerão com o tempo....
