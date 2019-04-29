@@ -24,11 +24,14 @@ services:
     # O Segundo item permite a sincronizacao dos 'pacotes' locais com o do
     # container.
     volumes:
-      - "./:node-app/"
-      - "./node_modules:/node-app/node_modules"
+      - ./:/node-app/
+      - ./node_modules:/node-app/node_modules
 
     # O serviço 'server' depende do serviço 'db' para funcionar
     depends_on:
       - db
     ports:
       - "9000:9000"
+
+volumes:
+  node_modules:
