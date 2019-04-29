@@ -1,0 +1,34 @@
+version: "3"
+
+services:
+  db:
+    image: "mongo"
+    container_name: "DB-CARDS_APP"
+    ports:
+      - "27017:27017"
+
+    # "Linkando" os dados locais com os do container
+    volumes:
+      - "./data/db:/data/db"
+
+  server:
+    container_name: "SERVER-CARDS_APP"
+
+    # Fazendo build no Dockerfile do folder root
+    build: "."
+
+    # O primeiro item é responsável por atualizar os itens locais com o do
+    # container sem a necessidade de reiniciar/buildar o container a cada
+    # alteracao no codigo.
+    # #################################
+    # O Segundo item permite a sincronizacao dos 'pacotes' locais com o do
+    # container.
+    volumes:
+      - "./:node-app/"
+      - "./node_modules:/node-app/node_modules"
+
+    # O serviço 'server' depende do serviço 'db' para funcionar
+    depends_on:
+      - db
+    ports:
+      - "9000:9000"
