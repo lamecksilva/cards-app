@@ -8,16 +8,10 @@ const app = express();
 // Middleware para 'parsing' do body
 app.use(bodyParser.json());
 
-// Importando middlewares para o endpoint users
-const users = require('./routes/users');
-
 // Endpoint "/" do servidor
 app.get('/', (req, res) => {
   res.json({ msg: 'Success' });
 });
-
-// Endpoint /api/users
-app.use('/api/users', users);
 
 // Conectando o mongodb a nossa aplicacao
 mongoose
