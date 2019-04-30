@@ -14,6 +14,8 @@ Repositório para um app de cadastrar cards
 
 E mais algumas outras que aparecerão com o tempo....
 
+Resumo do git flow [aqui](https://github.com/lamecksilva/cards-app/blob/master/GITFLOW.md)
 
-### DB Schema 
+### DB Schema
+
 ![image](https://user-images.githubusercontent.com/31391753/56854582-39672e00-690f-11e9-900b-33e77de177d5.png)
