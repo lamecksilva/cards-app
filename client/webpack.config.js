@@ -35,19 +35,19 @@ module.exports = {
     }),
   ],
   // Configurações do servidor de desenvolvimento
-  // devServer: {
-  //   historyApiFallback: true,
-  //   port: 3000,
-  //   proxy: {
-  //     '/api': {
-  //       target: {
-  //         host: 'server',
-  //         protocol: 'http:',
-  //         port: 9000,
-  //       },
-  //     },
-  //   },
-  // },
+  devServer: {
+    historyApiFallback: true,
+    port: 3000,
+    proxy: {
+      '/api': {
+        target: {
+          host: 'server',
+          protocol: 'http:',
+          port: 9000,
+        },
+      },
+    },
+  },
   resolve: {
     extensions: ['.js', '.json', '.jsx'],
   },
