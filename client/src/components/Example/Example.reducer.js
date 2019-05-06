@@ -1,3 +1,6 @@
+/*   =========  Reducer ========
+  Reducers vão especificar como a store vai mudar, conforme os "disparos" das actions
+*/
 const initialState = {
   isOnline: false,
 };
