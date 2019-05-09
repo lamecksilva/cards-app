@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
+const { ObjectId } = Schema.Types;
 
 // Criando Schema de usuário
 // Schemas são objetos que "mapeiam" uma collection e define a "forma" dos documentos
@@ -22,6 +23,12 @@ const UserSchema = new Schema(
     avatar: {
       type: String,
     },
+    cards: [
+      {
+        type: ObjectId,
+        ref: 'cards',
+      },
+    ],
     date: {
       type: Date,
       default: Date.now,
