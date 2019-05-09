@@ -9,7 +9,10 @@ const app = express();
 app.use(bodyParser.json());
 
 // Importando middlewares para o endpoint users
-const users = require('./routes/users');
+// const users = require('./routes/users');
+
+// Aplicando middleware para rotas, controllers e etc.
+require("./app")(app)
 
 // Endpoint "/" do servidor
 app.get('/', (req, res) => {
@@ -17,7 +20,7 @@ app.get('/', (req, res) => {
 });
 
 // Endpoint /api/users
-app.use('/api/users', users);
+// app.use('/api/users', users);
 
 // Conectando o mongodb a nossa aplicacao
 mongoose
