@@ -1,26 +1,36 @@
+// Importando Model de user e validação de campos
 const User = require('./model');
 const validation = require('./validation');
 
-exports.register = async (req, res) => {
+// Função para cadastro de novo usuário no banco
+exports.register = (req, res) => {
   const { errors, isValid } = validation.validateRegisterInput(req.body);
 
   if (!isValid) {
-    res.status(400).json({ success: false, errors });
+    // Caso os campos não sejam válidos, retorna uma bad request e os erros
+    return res.status(400).json({ success: false, errors });
   }
 
   try {
-    const user = User.findOne({ email: req.body.email });
+    // Query para checar se o email é válido
+    User.findOne({ email: req.body.email }, async (err, user) => {
+      // Caso dê erro, cai no catch
+      if (err) throw err;
 
-    if (user) {
-      res.status(400).json({ success: false, errors: { email: 'Email já cadastrado' } });
-    }
+      // Caso exista um usuário já cadastrado com o email enviado, retorna um erro
+      if (user) {
+        return res.status(400).json({ success: false, errors: { email: 'Email já cadastrado' } });
+      }
 
-    const savedUser = await new User(req.body).save();
+      // Salvando novo usuário no banco de dados
+      const savedUser = await new User(req.body).save();
+      console.log(savedUser);
 
-    console.log(savedUser);
-
-    return res.status(201).json({ success: true, user: savedUser });
+      // Retornando "Created", com os dados do banco de dados
+      return res.status(201).json({ success: true, user: savedUser });
+    });
   } catch (err) {
-    return res.status(400).json({ success: false, errors: err });
+    // Retornando "internal server error"
+    return res.status(500).json({ success: false, errors: err });
   }
 };
