@@ -6,7 +6,6 @@ const controller = require('./controller');
 
 // Use o apidoc para gerar a documentação das rotas da API
 // gere documentação com: apidoc -i app/ -o apidoc/
-
 /**
  *    @apiGroup User
  *    @api {post} /register Adicionar usuário para o db

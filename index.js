@@ -8,6 +8,8 @@ const app = express();
 // Middleware para 'parsing' do body
 app.use(bodyParser.json());
 
+const config = require('./config');
+
 // Importando middlewares para o endpoint users
 // const users = require('./routes/users');
 
@@ -24,7 +26,7 @@ app.get('/', (req, res) => {
 
 // Conectando o mongodb a nossa aplicacao
 mongoose
-  .connect('mongodb://db:27017/cards-app', { useNewUrlParser: true })
+  .connect(config.mongoURI, { useNewUrlParser: true })
   .then(() => console.log('MongoDB Connected'))
   .catch(err => console.log(err));
 
