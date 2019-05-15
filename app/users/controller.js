@@ -1,3 +1,6 @@
+// Importando bcrypt
+const bcrypt = require('bcryptjs');
+
 // Importando Model de user e validação de campos
 const User = require('./model');
 const validation = require('./validation');
@@ -22,12 +25,25 @@ exports.register = (req, res) => {
         return res.status(400).json({ success: false, errors: { email: 'Email já cadastrado' } });
       }
 
-      // Salvando novo usuário no banco de dados
-      const savedUser = await new User(req.body).save();
-      console.log(savedUser);
+      const newUser = { name: req.body.name, email: req.body.email };
+
+      // Fazendo hash de senha
+      bcrypt.genSalt(17, (err, salt) => {
+        if (err) throw err;
+
+        bcrypt.hash(req.body.password, salt, (error, hash) => {
+          if (error) throw err;
+
+          newUser.password = hash;
+          // Salvando novo usuário no banco de dados
+          const savedUser = new User(newUser)
+            .save()
+            .then(user => res.status(201).json({ success: true, user }));
+          console.log(savedUser);
+        });
+      });
 
       // Retornando "Created", com os dados do banco de dados
-      return res.status(201).json({ success: true, user: savedUser });
     });
   } catch (err) {
     // Retornando "internal server error"
