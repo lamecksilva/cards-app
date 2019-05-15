@@ -28,7 +28,7 @@ exports.register = (req, res) => {
       const newUser = { name: req.body.name, email: req.body.email };
 
       // Fazendo hash de senha
-      bcrypt.genSalt(17, (err, salt) => {
+      bcrypt.genSalt(10, (err, salt) => {
         if (err) throw err;
 
         bcrypt.hash(req.body.password, salt, (error, hash) => {

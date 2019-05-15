@@ -52,6 +52,11 @@ exports.validateRegisterInput = (data) => {
     errors.password = 'Campo senha não pode ser vazio';
   }
 
+  // Se o campo é vazio
+  if (isEmpty(data.password2)) {
+    errors.password2 = 'Campo senha não pode ser vazio';
+  }
+
   return {
     errors,
     isValid: isEmpty(errors),
