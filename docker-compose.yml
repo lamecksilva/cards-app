@@ -28,6 +28,7 @@ services:
       - db
     ports:
       - "9000:9000"
+    
 
   web:
     container_name: "WEB-CARDS_APP"
