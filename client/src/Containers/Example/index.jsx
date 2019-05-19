@@ -2,14 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 // Separar "imports" de arquivos locais dos "imports" de módulos npm
-import { actionExample } from './Example.actions';
-import './Example.css';
+import { actionExample } from './actions';
+import './styles.css';
 
 // "Dumb" component (Component sem state)
 const Example = props => (
   <div>
     <h2 className="example" onClick={props.actionExample}>
-      Component for Example
+			Component for Example
     </h2>
     {/*
       Condicional "rendering" no jsx

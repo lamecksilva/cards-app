@@ -3,11 +3,13 @@
   e outro qualquer tipo de dado (ideal colocar em uma chave "payload"),
   que vai para o reducer, onde "trata" essa action
 */
+import { TOGGLE } from './actionTypes';
+
 const actionExample = () => {
   console.log('Example Action');
 
   return {
-    type: 'TOGGLE',
+    type: TOGGLE,
   };
 };
 
