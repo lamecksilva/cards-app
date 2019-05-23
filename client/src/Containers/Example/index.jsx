@@ -9,7 +9,7 @@ import './styles.css';
 const Example = props => (
   <div>
     <h2 className="example" onClick={props.actionExample}>
-			Component for Example
+      Component for Example
     </h2>
     {/*
       Condicional "rendering" no jsx

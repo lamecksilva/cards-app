@@ -5,12 +5,10 @@
 */
 import { TOGGLE } from './actionTypes';
 
-const actionExample = () => {
+export const actionExample = () => {
   console.log('Example Action');
 
   return {
     type: TOGGLE,
   };
 };
-
-export { actionExample };
