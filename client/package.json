@@ -26,9 +26,8 @@
 		"style-loader": "^0.23.1",
 		"webpack": "^4.30.0",
 		"webpack-cli": "^3.3.1",
-		"webpack-dev-server": "^3.3.1"
-	},
-	"dependencies": {
+		"webpack-dev-server": "^3.3.1",
 		"babel-plugin-module-resolver": "^3.2.0"
-	}
+	},
+	"dependencies": {}
 }
