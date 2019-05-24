@@ -36,10 +36,7 @@ exports.register = (req, res) => {
 
           newUser.password = hash;
           // Salvando novo usuário no banco de dados
-          const savedUser = new User(newUser)
-            .save()
-            .then(user => res.status(201).json({ success: true, user }));
-          console.log(savedUser);
+          new User(newUser).save().then(user => res.status(201).json({ success: true, user }));
         });
       });
 
@@ -47,6 +44,27 @@ exports.register = (req, res) => {
     });
   } catch (err) {
     // Retornando "internal server error"
+    return res.status(500).json({ success: false, errors: err });
+  }
+};
+
+// Função para retornar todos usuários cadastrados
+exports.getUsers = (req, res) => {
+  try {
+    // "Querying" os usuários do banco de dados
+    User.find({}, { password: 0 }, (err, users) => {
+      // Se dê algum problema, cairá no catch
+      if (err) throw err;
+
+      // Caso não exista usuários no banco, retorna erro
+      if (!users) {
+        return res.status(404).json({ success: false, users: [] });
+      }
+
+      // Retornando todos usuários
+      return res.status(200).json({ success: true, users });
+    });
+  } catch (err) {
     return res.status(500).json({ success: false, errors: err });
   }
 };

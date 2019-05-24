@@ -2,7 +2,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 
 import store from './redux/store';
-import Example from './components/Example';
+import Example from './containers/Example';
 
 // Componente mais acima da aplicação, que será renderizado diretamente na div "root"
 const App = () => (
