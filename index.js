@@ -21,9 +21,6 @@ app.get('/', (req, res) => {
   res.json({ msg: 'Success' });
 });
 
-// Endpoint /api/users
-// app.use('/api/users', users);
-
 // Conectando o mongodb a nossa aplicacao
 mongoose
   .connect(config.mongoURI, { useNewUrlParser: true })
