@@ -5,6 +5,27 @@ const bcrypt = require('bcryptjs');
 const User = require('./model');
 const validation = require('./validation');
 
+// Função para retornar todos usuários cadastrados
+exports.getUsers = (req, res) => {
+  try {
+    // "Querying" os usuários do banco de dados
+    User.find({}, { password: 0 }, (err, users) => {
+      // Se dê algum problema, cairá no catch
+      if (err) throw err;
+
+      // Caso não exista usuários no banco, retorna erro
+      if (!users) {
+        return res.status(404).json({ success: false, users: [] });
+      }
+
+      // Retornando todos usuários
+      return res.status(200).json({ success: true, users });
+    });
+  } catch (err) {
+    return res.status(500).json({ success: false, errors: err });
+  }
+};
+
 // Função para cadastro de novo usuário no banco
 exports.register = (req, res) => {
   const { errors, isValid } = validation.validateRegisterInput(req.body);
@@ -48,23 +69,21 @@ exports.register = (req, res) => {
   }
 };
 
-// Função para retornar todos usuários cadastrados
-exports.getUsers = (req, res) => {
+// Função para deletar um usuário do banco de dados
+exports.deleteUser = (req, res) => {
+  const { id } = req.params;
+
   try {
-    // "Querying" os usuários do banco de dados
-    User.find({}, { password: 0 }, (err, users) => {
-      // Se dê algum problema, cairá no catch
+    User.findByIdAndDelete({ _id: id }, async (err, user) => {
       if (err) throw err;
 
-      // Caso não exista usuários no banco, retorna erro
-      if (!users) {
-        return res.status(404).json({ success: false, users: [] });
+      if (!user) {
+        return res.status(404).json({ success: true, error: 'Documento com este ID não existe' });
       }
 
-      // Retornando todos usuários
-      return res.status(200).json({ success: true, users });
+      return res.status(200).json({ success: true, user });
     });
   } catch (err) {
-    return res.status(500).json({ success: false, errors: err });
+    return res.status(500).json({ success: true, errors: err });
   }
 };

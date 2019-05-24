@@ -60,5 +60,25 @@ router.get('/', controller.getUsers);
  */
 router.post('/register', controller.register);
 
+/**
+ *  @apiGroup User
+ *  @api {delete} /:id Remover usuário do banco de dados
+ *  @apiParam {String} ID do documento a ser deletado
+ *  @apiExample {response} Exemplo de response:
+ *  {
+ *    "success": true,
+ *    "user": {
+ *      "cards": [],
+ *      "_id": "5cdb681d6863130046c90669",
+ *      "name": "Lameck Sandro",
+ *      "email": "lameck@lsdev.com",
+ *      "password": "$2a$17$5Ng3XxA3oRbEqeNXWIniluSwYst871lPs7AqiXI9ongOSeGG8gIvC",
+ *      "date": "2019-05-15T01:15:09.473Z",
+ *      "__v": 0
+ *    }
+ *  }
+ */
+router.delete('/:id', controller.deleteUser);
+
 // Exportando rotas
 module.exports = router;
