@@ -1,35 +1,38 @@
 {
-  "name": "cards-app",
-  "version": "0.0.0",
-  "description": "Um web app para adicionar cards e imagens",
-  "main": "server.js",
-  "scripts": {
-    "start": "node index.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/lamecksilva/cards-app.git"
-  },
-  "keywords": [
-    "nodejs",
-    "react"
-  ],
-  "author": "Lameck",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/lamecksilva/cards-app/issues"
-  },
-  "homepage": "https://github.com/lamecksilva/cards-app#readme",
-  "dependencies": {
-    "body-parser": "^1.19.0",
-    "express": "^4.16.4",
-    "mongoose": "^5.5.4"
-  },
-  "devDependencies": {
-    "eslint": "^5.16.0",
-    "eslint-config-airbnb": "^17.1.0",
-    "eslint-plugin-import": "^2.17.2",
-    "eslint-plugin-jsx-a11y": "^6.2.1",
-    "eslint-plugin-react": "^7.12.4"
-  }
+	"name": "cards-app",
+	"version": "0.0.0",
+	"description": "Um web app para adicionar cards e imagens",
+	"main": "server.js",
+	"scripts": {
+		"start": "node index.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/lamecksilva/cards-app.git"
+	},
+	"keywords": [
+		"nodejs",
+		"react"
+	],
+	"author": "Lameck",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/lamecksilva/cards-app/issues"
+	},
+	"homepage": "https://github.com/lamecksilva/cards-app#readme",
+	"dependencies": {
+		"bcryptjs": "^2.4.3",
+		"body-parser": "^1.19.0",
+		"express": "^4.16.4",
+		"mongoose": "^5.5.4",
+		"multer": "^1.4.1",
+		"validator": "^10.11.0"
+	},
+	"devDependencies": {
+		"eslint": "^5.16.0",
+		"eslint-config-airbnb": "^17.1.0",
+		"eslint-plugin-import": "^2.17.2",
+		"eslint-plugin-jsx-a11y": "^6.2.1",
+		"eslint-plugin-react": "^7.12.4"
+	}
 }
