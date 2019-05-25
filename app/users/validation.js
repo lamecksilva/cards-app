@@ -5,6 +5,8 @@ const isLength = require('validator/lib/isLength');
 const isEmail = require('validator/lib/isEmail');
 const isEmpty = require('../../utils/is-empty');
 
+const { ObjectId } = require('mongoose').Types;
+
 exports.validateRegisterInput = (data) => {
   // Criando objeto para conter os errors
   const errors = {};
@@ -60,5 +62,27 @@ exports.validateRegisterInput = (data) => {
   return {
     errors,
     isValid: isEmpty(errors),
+  };
+};
+
+// Validando se é um Object ID ou não
+exports.validateObjectID = (id) => {
+  const errors = {};
+
+  // Se o id for vazio, ele é igualado a uma string vazia, para evitar erros com "undefined"
+  id = !isEmpty(id) ? id : '';
+
+  if (!ObjectId.isValid(id)) {
+    errors.id = 'Não é um ObjectID válido';
+  }
+
+  // Se o id é vazio
+  if (isEmpty(id)) {
+    errors.id = 'O ID não pode ser vazio';
+  }
+
+  return {
+    isValid: isEmpty(errors),
+    errors,
   };
 };

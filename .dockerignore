@@ -1,0 +1,5 @@
+apidoc
+yarn-error.log
+.eslintrc.json
+.gitignore
+*.md
