@@ -9,8 +9,8 @@ const controller = require('./controller');
 
 /**
  *    @apiGroup User
- *    @api {get} /users Retornando usuários do banco de dados
- *    @apiExample {response} Exemplo de response:
+ *    @api {get} api/users Retornar usuários
+ *    @apiExample {response} Response (exemplo):
  *      {
  *        "success": true,
  *        "users": [
@@ -38,19 +38,26 @@ router.get('/', controller.getUsers);
 
 /**
  *    @apiGroup User
- *    @api {post} /register Adicionar usuário para o db
+ *    @api {post} api/users/register Adicionar usuário
  *    @apiParam {String} name Nome do perfil (Required)
  *    @apiParam {String} email Email do novo usuário (Required)
  *    @apiParam {String} password Senha da conta (Required)
  *    @apiParam {String} password2 Confirmação da senha (Required)
- *    @apiExample {response} Exemplo de response:
+ *    @apiExample {request} Request Body (exemplo):
+ *      {
+ *        "name": "John Doe",
+ *        "email": "johndoe@test.com",
+ *        "password": "123456",
+ *        "password2": "123456"
+ *      }
+ *    @apiExample {response} Response (exemplo):
  *      {
  *        "success": true,
  *        "user": {
  *          "cards": [],
  *          "_id": "5cd46b53e44376002f7957cf",
- *          "name": "Example",
- *          "email": "example3@example.com",
+ *          "name": "John Doe",
+ *          "email": "johndoe@test.com",
  *          "password": "123456",
  *          "date": "2019-05-09T18:02:59.560Z",
  *          "__v": 0
@@ -62,9 +69,34 @@ router.post('/register', controller.register);
 
 /**
  *  @apiGroup User
- *  @api {delete} /:id Remover usuário do banco de dados
- *  @apiParam {String} ID do documento a ser deletado
- *  @apiExample {response} Exemplo de response:
+ *  @api {get} api/users/:id Retornar um usuário
+ *  @apiParam {String} ID do usuário
+ *  @apiExample {request} Request URL (exemplo):
+ *    /api/users/5cd41cd3f56d1f04647d66b7
+ *  @apiExample {response} Response (exemplo):
+ *    {
+ *      "success": true,
+ *      "user": {
+ *        "cards": [],
+ *        "_id": "5cd41cd3f56d1f04647d66b7",
+ *        "name": "Example",
+ *        "email": "example2@example.com",
+ *        "password": "123456",
+ *        "date": "2019-05-09T12:28:03.286Z",
+ *        "__v": 0
+ *      }
+ *    }
+ *
+ */
+router.get('/:id', controller.getUser);
+
+/**
+ *  @apiGroup User
+ *  @api {delete} api/users/:id Remover um usuário
+ *  @apiParam {String} ID do usuário
+ *  @apiExample {request} Request URL (exemplo):
+ *    /api/users/5cdb681d6863130046c90669
+ *  @apiExample {response} Response (exemplo):
  *  {
  *    "success": true,
  *    "user": {

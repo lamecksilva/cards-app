@@ -5,6 +5,7 @@ const bcrypt = require('bcryptjs');
 const User = require('./model');
 const validation = require('./validation');
 
+// =========================================================================================
 // Função para retornar todos usuários cadastrados
 exports.getUsers = (req, res) => {
   try {
@@ -26,6 +27,7 @@ exports.getUsers = (req, res) => {
   }
 };
 
+// =========================================================================================
 // Função para cadastro de novo usuário no banco
 exports.register = (req, res) => {
   const { errors, isValid } = validation.validateRegisterInput(req.body);
@@ -69,21 +71,58 @@ exports.register = (req, res) => {
   }
 };
 
+// =========================================================================================
+// Função para retornar dados de um usuário
+exports.getUser = (req, res) => {
+  const { id } = req.params;
+
+  const { isValid, errors } = validation.validateObjectID(id);
+
+  if (!isValid) {
+    return res.status(400).json({ success: false, errors });
+  }
+
+  try {
+    User.findOne({ _id: id }, { password: 0 }, async (err, user) => {
+      if (err) throw err;
+
+      if (!user) {
+        return res
+          .status(404)
+          .json({ success: false, errors: { id: 'Sem usuários para este id' } });
+      }
+
+      return res.status(200).json({ success: true, user });
+    });
+  } catch (err) {
+    return res.status(500).json({ success: false, errors: err });
+  }
+};
+
+// =========================================================================================
 // Função para deletar um usuário do banco de dados
 exports.deleteUser = (req, res) => {
   const { id } = req.params;
+
+  const { isValid, errors } = validation.validateObjectID(id);
+
+  if (!isValid) {
+    return res.status(400).json({ success: false, errors });
+  }
 
   try {
     User.findByIdAndDelete({ _id: id }, async (err, user) => {
       if (err) throw err;
 
       if (!user) {
-        return res.status(404).json({ success: true, error: 'Documento com este ID não existe' });
+        return res
+          .status(404)
+          .json({ success: false, errors: { id: 'Sem usuários para este id' } });
       }
 
       return res.status(200).json({ success: true, user });
     });
   } catch (err) {
-    return res.status(500).json({ success: true, errors: err });
+    return res.status(500).json({ success: false, errors: err });
   }
 };
