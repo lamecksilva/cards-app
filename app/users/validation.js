@@ -118,3 +118,44 @@ exports.validateUpdateInput = (id, data) => {
     errors,
   };
 };
+
+// Validando senha
+exports.validatePassword = (id, data) => {
+  const errors = {};
+
+  data.password = !isEmpty(data.password) ? data.password : '';
+  data.password2 = !isEmpty(data.password2) ? data.password2 : '';
+
+  // Validar Id
+  if (!ObjectId.isValid(id)) {
+    errors.id = 'Não é um ObjectID válido';
+  }
+  if (isEmpty(id)) {
+    errors.id = 'O ID não pode ser vazio';
+  }
+
+  // Se a senha está entre 4 e 30 caracteres
+  if (!isLength(data.password, { min: 4, max: 30 })) {
+    errors.password = 'A senha deve conter entre 4 e 30 caracteres';
+  }
+
+  // Se as senhas são iguais
+  if (!isEquals(data.password, data.password2)) {
+    errors.password2 = 'As senhas devem ser iguais';
+  }
+
+  // Se o campo é vazio
+  if (isEmpty(data.password)) {
+    errors.password = 'Campo senha não pode ser vazio';
+  }
+
+  // Se o campo é vazio
+  if (isEmpty(data.password2)) {
+    errors.password2 = 'Campo senha não pode ser vazio';
+  }
+
+  return {
+    errors,
+    isValid: isEmpty(errors),
+  };
+};

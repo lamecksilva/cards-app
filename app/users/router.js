@@ -10,7 +10,7 @@ const controller = require('./controller');
 /**
  *    @apiGroup User
  *    @api {get} api/users Retornar usuários
- *    @apiExample {response} Response (exemplo):
+ *    @apiExample {response} Response (exemplo)
  *      {
  *        "success": true,
  *        "users": [
@@ -43,14 +43,14 @@ router.get('/', controller.getUsers);
  *    @apiParam {String} email Email do novo usuário (Required)
  *    @apiParam {String} password Senha da conta (Required)
  *    @apiParam {String} password2 Confirmação da senha (Required)
- *    @apiExample {request} Request Body (exemplo):
+ *    @apiExample {request} Request Body (exemplo)
  *      {
  *        "name": "John Doe",
  *        "email": "johndoe@lsdev.com",
  *        "password": "123456",
  *        "password2": "123456"
  *      }
- *    @apiExample {response} Response (exemplo):
+ *    @apiExample {response} Response (exemplo)
  *      {
  *        "success": true,
  *        "user": {
@@ -70,10 +70,10 @@ router.post('/register', controller.register);
 /**
  *  @apiGroup User
  *  @api {get} api/users/:id Retornar um usuário
- *  @apiParam {String} ID do usuário
- *  @apiExample {request} Request URL (exemplo):
+ *  @apiParam {String} id ID do usuário
+ *  @apiExample {request} Request URL (exemplo)
  *    /api/users/5cd41cd3f56d1f04647d66b7
- *  @apiExample {response} Response (exemplo):
+ *  @apiExample {response} Response (exemplo)
  *    {
  *      "success": true,
  *      "user": {
@@ -81,7 +81,7 @@ router.post('/register', controller.register);
  *        "_id": "5cd41cd3f56d1f04647d66b7",
  *        "name": "Example",
  *        "email": "example2@example.com",
- *        "password": "123456",
+ *        "password": "$2a$10$CUd0fZv68NsoezxI6IBSU.8voeDBGnab0JFZb4qbmCsuz1f9cHxA.",
  *        "date": "2019-05-09T12:28:03.286Z",
  *        "__v": 0
  *      }
@@ -90,15 +90,70 @@ router.post('/register', controller.register);
  */
 router.get('/:id', controller.getUser);
 
+/**
+ *  @apiGroup User
+ *  @api {patch} api/users/:id Atualizar dados
+ *  @apiParam {String} id ID do usuário
+ *  @apiExample {request} Request Body (exemplo)
+ *    /api/users/5ce9e7708c507e001f926ab9
+ *
+ *    {
+ *      "name": "Example update"
+ *    }
+ *  @apiExample {response} Response (exemplo)
+ *    {
+ *      "success": true,
+ *      "user": {
+ *        "cards": [],
+ *        "_id": "5ce9e7708c507e001f926ab9",
+ *        "name": "Example update",
+ *        "email": "johndoe@lsdev.com",
+ *        "password": "$2a$10$CUd0fZv68NsoezxI6IBSU.8voeDBGnab0JFZb4qbmCsuz1f9cHxA.",
+ *        "date": "2019-05-26T01:10:08.065Z",
+ *        "__v": 0
+ *      }
+ *    }
+ *
+ */
 router.patch('/:id', controller.updateUser);
 
 /**
  *  @apiGroup User
+ *  @api {patch} api/users/change-password/:id Atualizar senha
+ *  @apiParam {String} id ID do usuário
+ *  @apiParam {String} password Nova senha
+ *  @apiParam {String} password2 Confirmação de senha
+ *  @apiExample {request} Request Body (exemplo)
+ *    /api/users/change-password/5ce755c37951f8001121add1
+ *
+ *    {
+ *      "password": "123456",
+ *      "password2": "123456"
+ *    }
+ *  @apiExample {response} Response (exemplo)
+ *    {
+ *      "success": true,
+ *      "user": {
+ *        "cards": [],
+ *        "_id": "5ce755c37951f8001121add1",
+ *        "name": "Fábio Rabin",
+ *        "email": "fabio@lsdev.com",
+ *        "password": "$2a$10$ZK5K.TGYjokfwOXJ.OcxMuQza0DO8DyDbNbFzebsb6IWhc0J/ASAS",
+ *        "date": "2019-05-24T02:24:03.674Z",
+ *        "__v": 0
+ *      }
+ *    }
+ *
+ */
+router.patch('/change-password/:id', controller.updatePassword);
+
+/**
+ *  @apiGroup User
  *  @api {delete} api/users/:id Remover um usuário
- *  @apiParam {String} ID do usuário
- *  @apiExample {request} Request URL (exemplo):
+ *  @apiParam {String} id ID do usuário
+ *  @apiExample {request} Request URL (exemplo)
  *    /api/users/5cdb681d6863130046c90669
- *  @apiExample {response} Response (exemplo):
+ *  @apiExample {response} Response (exemplo)
  *  {
  *    "success": true,
  *    "user": {
@@ -106,7 +161,7 @@ router.patch('/:id', controller.updateUser);
  *      "_id": "5cdb681d6863130046c90669",
  *      "name": "Lameck Sandro",
  *      "email": "lameck@lsdev.com",
- *      "password": "$2a$17$5Ng3XxA3oRbEqeNXWIniluSwYst871lPs7AqiXI9ongOSeGG8gIvC",
+ *      "password": "$2a$10$CUd0fZv68NsoezxI6IBSU.8voeDBGnab0JFZb4qbmCsuz1f9cHxA.",
  *      "date": "2019-05-15T01:15:09.473Z",
  *      "__v": 0
  *    }
