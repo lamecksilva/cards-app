@@ -90,6 +90,8 @@ router.post('/register', controller.register);
  */
 router.get('/:id', controller.getUser);
 
+router.patch('/:id', controller.updateUser);
+
 /**
  *  @apiGroup User
  *  @api {delete} api/users/:id Remover um usuário

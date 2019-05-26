@@ -114,10 +114,10 @@ exports.updateUser = (req, res) => {
     User.findOneAndUpdate(
       { _id: id },
       {
-        name: req.body.name,
-        email: req.body.email,
+        $set: req.body,
       },
-      async (err, user) => {
+      { new: true },
+      (err, user) => {
         if (err) throw err;
 
         if (!user) {
