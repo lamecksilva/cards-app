@@ -55,7 +55,7 @@ exports.register = (req, res) => {
         if (err) throw err;
 
         bcrypt.hash(req.body.password, salt, (error, hash) => {
-          if (error) throw err;
+          if (error) throw error;
 
           newUser.password = hash;
           // Salvando novo usuário no banco de dados
@@ -93,6 +93,82 @@ exports.getUser = (req, res) => {
       }
 
       return res.status(200).json({ success: true, user });
+    });
+  } catch (err) {
+    return res.status(500).json({ success: false, errors: err });
+  }
+};
+
+// =========================================================================================
+// Função para atualizar dados de um usuário
+exports.updateUser = (req, res) => {
+  const { id } = req.params;
+
+  const { isValid, errors } = validation.validateUpdateInput(id, req.body);
+
+  if (!isValid) {
+    return res.status(400).json({ success: false, errors });
+  }
+
+  try {
+    User.findOneAndUpdate(
+      { _id: id },
+      {
+        $set: req.body,
+      },
+      { new: true },
+      (err, user) => {
+        if (err) throw err;
+
+        if (!user) {
+          return res
+            .status(404)
+            .json({ success: false, errors: { id: 'Sem usuários para este id' } });
+        }
+
+        return res.status(200).json({ success: true, user });
+      },
+    );
+  } catch (err) {
+    return res.status(500).json({ success: false, errors: err });
+  }
+};
+
+// =========================================================================================
+// Função para troca de senha
+exports.updatePassword = (req, res) => {
+  const { id } = req.params;
+
+  const { isValid, errors } = validation.validatePassword(id, req.body);
+
+  if (!isValid) {
+    return res.status(400).json({ success: false, errors });
+  }
+
+  try {
+    User.findOne({ _id: id }, async (err, user) => {
+      if (err) throw err;
+
+      if (!user) {
+        return res
+          .status(404)
+          .json({ success: false, errors: { id: 'Sem usuários para este id' } });
+      }
+
+      // Fazendo hash de senha
+      await bcrypt.genSalt(10, (err, salt) => {
+        if (err) throw err;
+
+        bcrypt.hash(req.body.password, salt, async (error, hash) => {
+          if (error) throw error;
+
+          user.password = await hash;
+          // Salvando novo usuário no banco de dados
+          user
+            .save()
+            .then(userUpdated => res.status(201).json({ success: true, user: userUpdated }));
+        });
+      });
     });
   } catch (err) {
     return res.status(500).json({ success: false, errors: err });
