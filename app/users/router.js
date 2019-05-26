@@ -46,7 +46,7 @@ router.get('/', controller.getUsers);
  *    @apiExample {request} Request Body (exemplo):
  *      {
  *        "name": "John Doe",
- *        "email": "johndoe@test.com",
+ *        "email": "johndoe@lsdev.com",
  *        "password": "123456",
  *        "password2": "123456"
  *      }
@@ -55,11 +55,11 @@ router.get('/', controller.getUsers);
  *        "success": true,
  *        "user": {
  *          "cards": [],
- *          "_id": "5cd46b53e44376002f7957cf",
+ *          "_id": "5ce9e7708c507e001f926ab9",
  *          "name": "John Doe",
- *          "email": "johndoe@test.com",
- *          "password": "123456",
- *          "date": "2019-05-09T18:02:59.560Z",
+ *          "email": "johndoe@lsdev.com",
+ *          "password": "$2a$10$CUd0fZv68NsoezxI6IBSU.8voeDBGnab0JFZb4qbmCsuz1f9cHxA.",
+ *          "date": "2019-05-26T01:10:08.065Z",
  *          "__v": 0
  *        }
  *      }

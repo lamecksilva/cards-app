@@ -22,10 +22,13 @@ app.get('/', (req, res) => {
 });
 
 // Conectando o mongodb a nossa aplicacao
-mongoose
-  .connect(config.mongoURI, { useNewUrlParser: true })
-  .then(() => console.log('MongoDB Connected'))
-  .catch(err => console.log(err));
+setTimeout(
+  () => mongoose
+    .connect(config.mongoURI, { useNewUrlParser: true })
+    .then(() => console.log('MongoDB Connected'))
+    .catch(err => console.log(err)),
+  2000,
+);
 
 // Declarando a porta
 const PORT = config.PORT || 9000;

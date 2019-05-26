@@ -100,6 +100,41 @@ exports.getUser = (req, res) => {
 };
 
 // =========================================================================================
+// Função para atualizar dados de um usuário
+exports.updateUser = (req, res) => {
+  const { id } = req.params;
+
+  const { isValid, errors } = validation.validateUpdateInput(id, req.body);
+
+  if (!isValid) {
+    return res.status(400).json({ success: false, errors });
+  }
+
+  try {
+    User.findOneAndUpdate(
+      { _id: id },
+      {
+        name: req.body.name,
+        email: req.body.email,
+      },
+      async (err, user) => {
+        if (err) throw err;
+
+        if (!user) {
+          return res
+            .status(404)
+            .json({ success: false, errors: { id: 'Sem usuários para este id' } });
+        }
+
+        return res.status(200).json({ success: true, user });
+      },
+    );
+  } catch (err) {
+    return res.status(500).json({ success: false, errors: err });
+  }
+};
+
+// =========================================================================================
 // Função para deletar um usuário do banco de dados
 exports.deleteUser = (req, res) => {
   const { id } = req.params;

@@ -86,3 +86,58 @@ exports.validateObjectID = (id) => {
     errors,
   };
 };
+
+// Validando dados de update
+// OBS: Não sei quais boas práticas adotar quanto a updates, estou usando como acho melhor
+exports.validateUpdateInput = (id, data) => {
+  const errors = {};
+
+  id = !isEmpty(id) ? id : '';
+  data.name = !isEmpty(data.name) ? data.name : '';
+  data.email = !isEmpty(data.email) ? data.email : '';
+  data.password = !isEmpty(data.password) ? data.password : '';
+  data.password2 = !isEmpty(data.password2) ? data.password2 : '';
+
+  // Validar Id
+  if (!ObjectId.isValid(id)) {
+    errors.id = 'Não é um ObjectID válido';
+  }
+  if (isEmpty(id)) {
+    errors.id = 'O ID não pode ser vazio';
+  }
+
+  // Validar Name
+  if (!isLength(data.name, { min: 2, max: 30 })) {
+    errors.name = 'O campo name deve conter um nome entre 2 e 30 caracteres';
+  }
+  if (isEmpty(data.name)) {
+    errors.name = 'Campo name não pode ser vazio';
+  }
+
+  // Validar Email
+  if (!isEmail(data.email)) {
+    errors.email = 'O campo email deve conter um email válido';
+  }
+  if (isEmpty(data.email)) {
+    errors.email = 'Campo email não pode ser vazio';
+  }
+
+  // Validar password
+  if (!isLength(data.password, { min: 4, max: 30 })) {
+    errors.password = 'A senha deve conter entre 4 e 30 caracteres';
+  }
+  if (!isEquals(data.password, data.password2)) {
+    errors.password2 = 'As senhas devem ser iguais';
+  }
+  if (isEmpty(data.password)) {
+    errors.password = 'Campo senha não pode ser vazio';
+  }
+  if (isEmpty(data.password2)) {
+    errors.password2 = 'Campo senha não pode ser vazio';
+  }
+
+  return {
+    isValid: isEmpty(errors),
+    errors,
+  };
+};
