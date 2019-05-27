@@ -16,12 +16,14 @@ exports.registerCard = (req, res) => {
 // Função para fazer upload de um arquivo
 exports.uploadImage = (req, res) => {
   console.log(req.file);
-  console.log(req.file.mimetype.split('/'));
 
-  fs.writeFile(req.file.path, req.file.buffer, (err) => {
+  fs.writeFile(req.file.filename, req.file.buffer, 'binary', (err) => {
     if (err) {
       return res.status(500).json({ success: false, errors: err });
     }
-    return res.status(201).json({ success: true, imageData: req.file });
+    return res.status(201).json({
+      success: true,
+      imageData: req.file,
+    });
   });
 };
