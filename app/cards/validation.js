@@ -25,10 +25,10 @@ exports.validateRegisterInput = (data) => {
   }
 
   if (!ObjectId.isValid(data.user)) {
-    errors.id = 'ObjectID do usuário é inválido';
+    errors.user = 'ObjectID do usuário é inválido';
   }
   if (isEmpty(data.user)) {
-    errors.id = 'ObjectID do usuário não pode ser vazio';
+    errors.user = 'ObjectID do usuário não pode ser vazio';
   }
 
   return {
