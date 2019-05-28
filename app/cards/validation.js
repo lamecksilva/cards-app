@@ -10,7 +10,6 @@ exports.validateRegisterInput = (data, mimetype) => {
   data.title = !isEmpty(data.title) ? data.title : '';
   data.description = !isEmpty(data.description) ? data.description : '';
   data.user = !isEmpty(data.user) ? data.user : '';
-  console.log(mimetype);
 
   if (!['jpg', 'jpeg', 'png'].includes(mimetype)) {
     errors.image = 'Tipo de arquivo inválido';
