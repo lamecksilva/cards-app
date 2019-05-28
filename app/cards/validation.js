@@ -3,12 +3,18 @@ const { ObjectId } = require('mongoose').Types;
 const isLength = require('validator/lib/isLength');
 const isEmpty = require('../../utils/is-empty');
 
-exports.validateRegisterInput = (data) => {
+exports.validateRegisterInput = (data, mimetype) => {
   const errors = {};
 
+  mimetype = mimetype.split('/')[1];
   data.title = !isEmpty(data.title) ? data.title : '';
   data.description = !isEmpty(data.description) ? data.description : '';
   data.user = !isEmpty(data.user) ? data.user : '';
+  console.log(mimetype);
+
+  if (!['jpg', 'jpeg', 'png'].includes(mimetype)) {
+    errors.image = 'Tipo de arquivo inválido';
+  }
 
   if (!isLength(data.title, { min: 2, max: 25 })) {
     errors.title = 'O titulo deve conter entre 2 e 25 caracteres';

@@ -7,7 +7,7 @@ const validation = require('./validation');
 
 exports.registerCard = (req, res) => {
   // Validando campos do body
-  const { isValid, errors } = validation.validateRegisterInput(req.body);
+  const { isValid, errors } = validation.validateRegisterInput(req.body, req.file.mimetype);
 
   if (!isValid) {
     return res.status(400).json({ success: false, errors });
