@@ -62,3 +62,28 @@ exports.getCards = (req, res) => {
     return res.status(500).json({ success: false, errors: e });
   }
 };
+
+// Função para editar os cards
+exports.editCard = (req, res) => {
+  const { id } = req.params;
+
+  const { isValid, errors } = validation.validateUpdateInput(req.body);
+
+  if (!isValid) {
+    return res.status(400).json({ success: false, errors });
+  }
+
+  try {
+    Card.findOneAndUpdate({ _id: id }, { $set: req.body }, { new: true }, (err, card) => {
+      if (err) throw err;
+
+      if (!card) {
+        return res.status(404).json({ success: false, errors: { id: 'Sem cards para este ID' } });
+      }
+
+      return res.status(200).json({ success: true, card });
+    });
+  } catch (e) {
+    return res.status(500).json({ success: false, errors: e });
+  }
+};

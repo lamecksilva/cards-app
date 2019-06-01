@@ -41,3 +41,28 @@ exports.validateRegisterInput = (data, mimetype) => {
     errors,
   };
 };
+
+exports.validateUpdateInput = (data) => {
+  const errors = {};
+
+  if (!isEmpty(data.user)) {
+    errors.user = 'Não se pode mudar o criador do card';
+  }
+
+  if (!isEmpty(data.title)) {
+    if (!isLength(data.title, { min: 2, max: 25 })) {
+      errors.title = 'O titulo deve conter entre 2 e 25 caracteres';
+    }
+  }
+
+  if (!isEmpty(data.description)) {
+    if (!isLength(data.description, { min: 2, max: 120 })) {
+      errors.description = 'A descrição deve conter entre 2 e 120 caracteres';
+    }
+  }
+
+  return {
+    isValid: isEmpty(errors),
+    errors,
+  };
+};
