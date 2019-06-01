@@ -66,3 +66,22 @@ exports.validateUpdateInput = (data) => {
     errors,
   };
 };
+
+exports.validateImageInput = (mimetype) => {
+  const errors = {};
+
+  mimetype = mimetype.split('/')[1];
+
+  if (!['jpg', 'jpeg', 'png'].includes(mimetype)) {
+    errors.image = 'Tipo de arquivo inválido';
+  }
+
+  if (isEmpty(mimetype)) {
+    errors.image = 'Uma imagem é necessária';
+  }
+
+  return {
+    isValid: isEmpty(errors),
+    errors
+  }
+};

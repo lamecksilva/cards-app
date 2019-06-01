@@ -27,6 +27,8 @@ router.post('/register', upload.single('image'), controller.registerCard);
 
 router.get('/', controller.getCards);
 
-router.patch('/:id', controller.editCard);
+router.patch('/update/:id', controller.editCard);
+
+router.put('/update-image/:id', upload.single('image'), controller.updateImage);
 
 module.exports = router;
