@@ -11,7 +11,7 @@ exports.getUsers = (req, res) => {
   try {
     // "Querying" os usuários do banco de dados
     User.find({}, { password: 0 })
-      .populate('card')
+      .populate('cards')
       .exec((err, users) => {
         // Se dê algum problema, cairá no catch
         if (err) throw err;
