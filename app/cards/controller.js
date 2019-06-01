@@ -29,9 +29,7 @@ exports.registerCard = (req, res) => {
 
       // Criando o arquivo no file system
       fs.writeFile(filename, req.file.buffer, (error) => {
-        if (error) {
-          throw error;
-        }
+        if (error) throw error;
 
         // Criando novo card
         new Card({
@@ -45,7 +43,93 @@ exports.registerCard = (req, res) => {
           .catch(err => res.status(500).json({ success: false, errors: err }));
       });
     });
-  } catch (err) {
-    return res.status(500).json({ success: false, errors: err });
+  } catch (e) {
+    return res.status(500).json({ success: false, errors: e });
+  }
+};
+
+// Função para retornar os cards do banco de dados
+exports.getCards = (req, res) => {
+  try {
+    Card.find({}, (err, cards) => {
+      if (err) throw err;
+
+      return res.status(200).json({ success: true, cards });
+    });
+  } catch (e) {
+    return res.status(500).json({ success: false, errors: e });
+  }
+};
+
+// Função para editar os cards
+exports.editCard = (req, res) => {
+  const { id } = req.params;
+
+  const { isValid, errors } = validation.validateUpdateInput(req.body);
+
+  if (!isValid) {
+    return res.status(400).json({ success: false, errors });
+  }
+
+  try {
+    // Procurando pelo registro do id e setando os novos dados
+    Card.findOneAndUpdate({ _id: id }, { $set: req.body }, { new: true }, (err, card) => {
+      if (err) throw err;
+
+      if (!card) {
+        return res.status(404).json({ success: false, errors: { id: 'Sem cards para este ID' } });
+      }
+
+      return res.status(200).json({ success: true, card });
+    });
+  } catch (e) {
+    return res.status(500).json({ success: false, errors: e });
+  }
+};
+
+exports.updateImage = (req, res) => {
+  const { id } = req.params;
+
+  const { isValid, errors } = validation.validateImageInput(req.file.mimetype);
+
+  if (!isValid) {
+    return res.status(400).json({ success: false, errors });
+  }
+
+  try {
+    // Procurando um documento com o id passado
+    Card.findOne({ _id: id }, (err, card) => {
+      if (err) throw err;
+
+      if (!card) {
+        return res.status(404).json({ success: false, errors: { id: 'Sem cards para este ID' } });
+      }
+
+      // Criando novo nome do arquivo
+      const filename = `images/${Date.now()}-${card._doc.user}${path.extname(
+        req.file.originalname,
+      )}`;
+
+      // Função assincrona para remover arquivo
+      fs.unlink(card.image, (err) => {
+        if (err) throw err;
+
+        // Criando novo arquivo
+        fs.writeFile(filename, req.file.buffer, (error) => {
+          if (error) throw error;
+
+          // Setando o novo filename
+          card.image = filename;
+
+          // Salvando o documento
+          card
+            .save()
+            .then(c => res.status(200).json({ success: true, c }))
+            .catch(error => res.status(500).json({ success: false, errors: error }));
+        });
+      });
+    });
+  } catch (e) {
+    return res.status(500).json({ success: false, errors: e });
   }
 };
