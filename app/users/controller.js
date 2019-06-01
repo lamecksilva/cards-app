@@ -10,18 +10,15 @@ const validation = require('./validation');
 exports.getUsers = (req, res) => {
   try {
     // "Querying" os usuários do banco de dados
-    User.find({}, { password: 0 }, (err, users) => {
-      // Se dê algum problema, cairá no catch
-      if (err) throw err;
+    User.find({}, { password: 0 })
+      .populate('card')
+      .exec((err, users) => {
+        // Se dê algum problema, cairá no catch
+        if (err) throw err;
 
-      // Caso não exista usuários no banco, retorna erro
-      if (!users) {
-        return res.status(404).json({ success: false, users: [] });
-      }
-
-      // Retornando todos usuários
-      return res.status(200).json({ success: true, users });
-    });
+        // Retornando todos usuários
+        return res.status(200).json({ success: true, users });
+      });
   } catch (err) {
     return res.status(500).json({ success: false, errors: err });
   }
