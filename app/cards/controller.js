@@ -57,8 +57,8 @@ exports.registerCard = (req, res) => {
 // Função para retornar os cards do banco de dados
 exports.getCards = (req, res) => {
   try {
-    Card.find({})
-      .populate('user')
+    Card.find({}, { __v: 0 })
+      .populate({ path: 'user', select: '-password -__v' })
       .exec((err, cards) => {
         if (err) throw err;
 
