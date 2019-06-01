@@ -39,7 +39,13 @@ exports.registerCard = (req, res) => {
           image: filename,
         })
           .save()
-          .then(card => res.status(201).json({ success: true, card }))
+          .then((card) => {
+            user.cards.push(card);
+            user
+              .save()
+              .then(u => res.status(201).json({ success: true, card }))
+              .catch(e => res.status(500).json({ success: false, error: e }));
+          })
           .catch(err => res.status(500).json({ success: false, errors: err }));
       });
     });
@@ -51,11 +57,13 @@ exports.registerCard = (req, res) => {
 // Função para retornar os cards do banco de dados
 exports.getCards = (req, res) => {
   try {
-    Card.find({}, (err, cards) => {
-      if (err) throw err;
+    Card.find({}, { __v: 0 })
+      .populate({ path: 'user', select: '-password -__v' })
+      .exec((err, cards) => {
+        if (err) throw err;
 
-      return res.status(200).json({ success: true, cards });
-    });
+        return res.status(200).json({ success: true, cards });
+      });
   } catch (e) {
     return res.status(500).json({ success: false, errors: e });
   }

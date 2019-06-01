@@ -10,8 +10,8 @@ const validation = require('./validation');
 exports.getUsers = (req, res) => {
   try {
     // "Querying" os usuários do banco de dados
-    User.find({}, { password: 0 })
-      .populate('card')
+    User.find({}, { password: 0, __v: 0 })
+      .populate('cards')
       .exec((err, users) => {
         // Se dê algum problema, cairá no catch
         if (err) throw err;
