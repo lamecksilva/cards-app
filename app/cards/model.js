@@ -19,7 +19,7 @@ const CardSchema = new Schema(
     user: {
       type: ObjectId,
       required: true,
-      ref: 'users',
+      ref: 'user',
     },
   },
   {

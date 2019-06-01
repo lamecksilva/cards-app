@@ -26,7 +26,7 @@ const UserSchema = new Schema(
     cards: [
       {
         type: ObjectId,
-        ref: 'cards',
+        ref: 'card',
       },
     ],
     date: {
