@@ -25,4 +25,6 @@ const controller = require('./controller');
 
 router.post('/register', upload.single('image'), controller.registerCard);
 
+router.get('/', controller.getCards);
+
 module.exports = router;

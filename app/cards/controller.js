@@ -45,7 +45,20 @@ exports.registerCard = (req, res) => {
           .catch(err => res.status(500).json({ success: false, errors: err }));
       });
     });
-  } catch (err) {
-    return res.status(500).json({ success: false, errors: err });
+  } catch (e) {
+    return res.status(500).json({ success: false, errors: e });
+  }
+};
+
+// Função para retornar os cards do banco de dados
+exports.getCards = (req, res) => {
+  try {
+    Card.find({}, (err, cards) => {
+      if (err) throw err;
+
+      return res.status(200).json({ success: true, cards });
+    });
+  } catch (e) {
+    return res.status(500).json({ success: false, errors: e });
   }
 };

@@ -21,6 +21,9 @@ app.get('/', (req, res) => {
   res.json({ msg: 'Success' });
 });
 
+// Servindo arquivos estáticos
+app.use('/images', express.static('images'));
+
 // Conectando o mongodb a nossa aplicacao
 setTimeout(
   () => mongoose
