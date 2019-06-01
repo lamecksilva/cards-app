@@ -73,7 +73,7 @@ exports.validateImageInput = (mimetype) => {
   mimetype = mimetype.split('/')[1];
 
   if (!['jpg', 'jpeg', 'png'].includes(mimetype)) {
-    errors.image = 'Tipo de arquivo inválido';
+    errors.image = 'Tipo de arquivo inválido, tipos válidos: [.jpg, .jpeg, .png]';
   }
 
   if (isEmpty(mimetype)) {
@@ -82,6 +82,6 @@ exports.validateImageInput = (mimetype) => {
 
   return {
     isValid: isEmpty(errors),
-    errors
-  }
+    errors,
+  };
 };

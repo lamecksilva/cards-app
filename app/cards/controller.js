@@ -72,6 +72,7 @@ exports.editCard = (req, res) => {
   }
 
   try {
+    // Procurando pelo registro do id e setando os novos dados
     Card.findOneAndUpdate({ _id: id }, { $set: req.body }, { new: true }, (err, card) => {
       if (err) throw err;
 
@@ -96,6 +97,7 @@ exports.updateImage = (req, res) => {
   }
 
   try {
+    // Procurando um documento com o id passado
     Card.findOne({ _id: id }, (err, card) => {
       if (err) throw err;
 
@@ -103,18 +105,23 @@ exports.updateImage = (req, res) => {
         return res.status(404).json({ success: false, errors: { id: 'Sem cards para este ID' } });
       }
 
+      // Criando novo nome do arquivo
       const filename = `images/${Date.now()}-${card._doc.user}${path.extname(
         req.file.originalname,
       )}`;
 
+      // Função assincrona para remover arquivo
       fs.unlink(card.image, (err) => {
         if (err) throw err;
 
+        // Criando novo arquivo
         fs.writeFile(filename, req.file.buffer, (error) => {
           if (error) throw error;
 
+          // Setando o novo filename
           card.image = filename;
 
+          // Salvando o documento
           card
             .save()
             .then(c => res.status(200).json({ success: true, c }))
