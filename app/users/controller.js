@@ -1,9 +1,12 @@
 // Importando bcrypt
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 // Importando Model de user e validação de campos
 const User = require('./model');
 const validation = require('./validation');
+
+const config = require('../../config');
 
 // =========================================================================================
 // Função para retornar todos usuários cadastrados
@@ -197,5 +200,50 @@ exports.deleteUser = (req, res) => {
     });
   } catch (err) {
     return res.status(500).json({ success: false, errors: err });
+  }
+};
+
+// =========================================================================================
+// Função para logar um usuário
+exports.loginUser = (req, res) => {
+  const { errors, isValid } = validation.validateLoginInput(req.body);
+
+  if (!isValid) {
+    return res.status(400).json({ success: false, errors });
+  }
+
+  try {
+    User.findOne({ email: req.body.email }, async (err, user) => {
+      if (err) throw err;
+
+      if (!user) {
+        errors.email = 'Usuário não encontrado';
+
+        return res.status(404).json({ success: false, errors });
+      }
+
+      bcrypt.compare(req.body.password, user.password, (error, isMatch) => {
+        if (error) throw error;
+
+        if (isMatch) {
+          const payload = {
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+          };
+
+          jwt.sign(payload, config.secret, (e, token) => {
+            if (e) throw e;
+
+            return res.status(200).json({ success: true, token: `Bearer ${token}` });
+          });
+        } else {
+          errors.password = 'Senha incorreta';
+          return res.status(400).json({ success: false, errors });
+        }
+      });
+    });
+  } catch (e) {
+    return res.status(500).json({ success: false, errors: e });
   }
 };

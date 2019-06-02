@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const passport = require('passport');
 
 // Instanciando o objeto express
 const app = express();
@@ -9,12 +10,6 @@ const app = express();
 app.use(bodyParser.json());
 
 const config = require('./config');
-
-// Importando middlewares para o endpoint users
-// const users = require('./routes/users');
-
-// Aplicando middleware para rotas, controllers e etc.
-require('./app')(app);
 
 // Endpoint "/" do servidor
 app.get('/', (req, res) => {
@@ -32,6 +27,13 @@ setTimeout(
     .catch(err => console.log(err)),
   2000,
 );
+
+// Aplicando middlewares do passport
+app.use(passport.initialize());
+require('./utils/passport')(passport);
+
+// Aplicando middleware para rotas, controllers e etc.
+require('./app')(app);
 
 // Declarando a porta
 const PORT = config.PORT || 9000;

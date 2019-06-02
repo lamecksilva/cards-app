@@ -1,6 +1,8 @@
 // Importando router
 const router = require('express').Router();
 
+const passport = require('passport');
+
 // Importando controller das rotas de usuário
 const controller = require('./controller');
 
@@ -167,7 +169,26 @@ router.patch('/change-password/:id', controller.updatePassword);
  *    }
  *  }
  */
-router.delete('/:id', controller.deleteUser);
+router.delete('/:id', passport.authenticate('jwt', { session: false }), controller.deleteUser);
+
+/**
+ *  @apiGroup User
+ *  @api {post} api/users/login Efetuar login
+ *  @apiParam {String} email Email do usuário
+ *  @apiParam {String} password Senha do usuário
+ *  @apiExample {request} Request Body (exemplo)
+ *    {
+ *      "email": "lameck@lsdev.com",
+ *      "password": "123456"
+ *    }
+ *  @apiExample {response} Response (exemplo)
+ *    {
+ *      "success": true,
+ *      "token": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1Y2YzZjgwODBiODVmODAwMTJiZGRjMTAiLCJuYW1lIjoidGVzdCIsImVtYWlsIjoidGVzdEBsc2Rldi5jb20iLCJpYXQiOjE1NTk0OTI2OTJ9.2k1-60HqbcG7KRTVUkw3Mh3eCd70ZhgMTap1p9zpgLU"
+ *    }
+ *
+ */
+router.post('/login', controller.loginUser);
 
 // Exportando rotas
 module.exports = router;
