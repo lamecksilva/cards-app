@@ -5,6 +5,8 @@ const User = require('../users/model');
 
 const validation = require('./validation');
 
+// =========================================================================================
+// Função para cadastrar um novo card
 exports.registerCard = (req, res) => {
   // Validando campos do body
   const { isValid, errors } = validation.validateRegisterInput(req.body, req.file.mimetype);
@@ -54,6 +56,7 @@ exports.registerCard = (req, res) => {
   }
 };
 
+// =========================================================================================
 // Função para retornar os cards do banco de dados
 exports.getCards = (req, res) => {
   try {
@@ -69,6 +72,7 @@ exports.getCards = (req, res) => {
   }
 };
 
+// =========================================================================================
 // Função para editar os cards
 exports.editCard = (req, res) => {
   const { id } = req.params;
@@ -95,6 +99,8 @@ exports.editCard = (req, res) => {
   }
 };
 
+// =========================================================================================
+// Função para atualizar imagem de um card
 exports.updateImage = (req, res) => {
   const { id } = req.params;
 

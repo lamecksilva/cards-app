@@ -159,3 +159,27 @@ exports.validatePassword = (id, data) => {
     isValid: isEmpty(errors),
   };
 };
+
+// Validando dados de login
+exports.validateLoginInput = (data) => {
+  const errors = {};
+
+  data.email = !isEmpty(data.email) ? data.email : '';
+  data.password = !isEmpty(data.password) ? data.password : '';
+
+  if (!isEmail(data.email)) {
+    errors.email = 'Email inválido';
+  }
+  if (isEmpty(data.email)) {
+    errors.email = 'Campo email não pode ser vazio';
+  }
+
+  if (isEmpty(data.password)) {
+    errors.password = 'Campo password não pode ser vazio';
+  }
+
+  return {
+    isValid: isEmpty(errors),
+    errors,
+  };
+};
