@@ -17,11 +17,9 @@ setTimeout(
   2000,
 );
 
-app.configure(() => {
-  app.use(bodyParser.json());
-  app.use('/images', express.static('images'));
-  app.use(passport.initialize());
-});
+app.use(bodyParser.json());
+app.use('/images', express.static('images'));
+app.use(passport.initialize());
 
 // Aplicando middlewares do passport para autenticacao de rotas
 require('./utils/passport')(passport);
@@ -29,5 +27,8 @@ require('./utils/passport')(passport);
 // Aplicando middleware para rotas, controllers e etc.
 require('./app')(app);
 
+// Declarando porta
+const PORT = config.port || 9000;
+
 // "Listening" o servidor na porta
-app.listen(config.PORT || 9000, () => console.log(`Server Running on port: ${PORT}`));
+app.listen(PORT, () => console.log(`Server Running on port: ${PORT}`));
