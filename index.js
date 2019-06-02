@@ -3,21 +3,10 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 
-// Instanciando o objeto express
-const app = express();
-
-// Middleware para 'parsing' do body
-app.use(bodyParser.json());
-
 const config = require('./config');
 
-// Endpoint "/" do servidor
-app.get('/', (req, res) => {
-  res.json({ msg: 'Success' });
-});
-
-// Servindo arquivos estáticos
-app.use('/images', express.static('images'));
+// Instanciando o objeto express
+const app = express();
 
 // Conectando o mongodb a nossa aplicacao
 setTimeout(
@@ -28,15 +17,17 @@ setTimeout(
   2000,
 );
 
-// Aplicando middlewares do passport
-app.use(passport.initialize());
+app.configure(() => {
+  app.use(bodyParser.json());
+  app.use('/images', express.static('images'));
+  app.use(passport.initialize());
+});
+
+// Aplicando middlewares do passport para autenticacao de rotas
 require('./utils/passport')(passport);
 
 // Aplicando middleware para rotas, controllers e etc.
 require('./app')(app);
 
-// Declarando a porta
-const PORT = config.PORT || 9000;
-
 // "Listening" o servidor na porta
-app.listen(PORT, () => console.log(`Server Running on port: ${PORT}`));
+app.listen(config.PORT || 9000, () => console.log(`Server Running on port: ${PORT}`));
