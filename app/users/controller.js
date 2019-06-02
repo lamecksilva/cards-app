@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 const User = require('./model');
 const validation = require('./validation');
 
+const logger = require('../../utils/logger');
 const config = require('../../config');
 
 // =========================================================================================
@@ -19,10 +20,15 @@ exports.getUsers = (req, res) => {
         // Se dê algum problema, cairá no catch
         if (err) throw err;
 
+        logger.info('Returning all users');
+
         // Retornando todos usuários
         return res.status(200).json({ success: true, users });
       });
   } catch (err) {
+    logger.error('Erro no getUsers do grupo Users');
+    logger.error(err);
+
     return res.status(500).json({ success: false, errors: err });
   }
 };
@@ -59,13 +65,21 @@ exports.register = (req, res) => {
 
           newUser.password = hash;
           // Salvando novo usuário no banco de dados
-          new User(newUser).save().then(user => res.status(201).json({ success: true, user }));
+          new User(newUser)
+            .save()
+            .then((user) => {
+              logger.info(`User ${user._doc._id} cadastrado`);
+              res.status(201).json({ success: true, user });
+            })
+            .catch(e => res.status(500).json({ success: false, errors: e }));
         });
       });
 
       // Retornando "Created", com os dados do banco de dados
     });
   } catch (err) {
+    logger.error('Erro no register do grupo Users');
+    logger.error(err);
     // Retornando "internal server error"
     return res.status(500).json({ success: false, errors: err });
   }
@@ -92,9 +106,12 @@ exports.getUser = (req, res) => {
           .json({ success: false, errors: { id: 'Sem usuários para este id' } });
       }
 
+      logger.info(`Retornando usuário ${user._doc._id}`);
       return res.status(200).json({ success: true, user });
     });
   } catch (err) {
+    logger.error('Erro no getUser do grupo Users');
+    logger.error(err);
     return res.status(500).json({ success: false, errors: err });
   }
 };
@@ -126,10 +143,13 @@ exports.updateUser = (req, res) => {
             .json({ success: false, errors: { id: 'Sem usuários para este id' } });
         }
 
+        logger.info(`Atualizando dados do user ${user._doc._id}`);
         return res.status(200).json({ success: true, user });
       },
     );
   } catch (err) {
+    logger.error("Erro no 'updateUser' do grupo Users");
+    logger.error(err);
     return res.status(500).json({ success: false, errors: err });
   }
 };
@@ -166,11 +186,17 @@ exports.updatePassword = (req, res) => {
           // Salvando novo usuário no banco de dados
           user
             .save()
-            .then(userUpdated => res.status(201).json({ success: true, user: userUpdated }));
+            .then((userUpdated) => {
+              logger.info(`Senha do usuário ${userUpdated._doc._id} alterada`);
+              res.status(201).json({ success: true, user: userUpdated });
+            })
+            .catch(e => res.status(500).json({ success: false, errors: e }));
         });
       });
     });
   } catch (err) {
+    logger.error("Erro no 'updatePassword' do grupo users");
+    logger.error(err);
     return res.status(500).json({ success: false, errors: err });
   }
 };
@@ -196,9 +222,12 @@ exports.deleteUser = (req, res) => {
           .json({ success: false, errors: { id: 'Sem usuários para este id' } });
       }
 
+      logger.info(`Usuário ${user._doc._id} deletado`);
       return res.status(200).json({ success: true, user });
     });
   } catch (err) {
+    logger.error("Erro no 'deleteUser' do grupo users");
+    logger.error(err);
     return res.status(500).json({ success: false, errors: err });
   }
 };
@@ -235,6 +264,7 @@ exports.loginUser = (req, res) => {
           jwt.sign(payload, config.secret, (e, token) => {
             if (e) throw e;
 
+            logger.info(`Usuário ${user._doc._id} logado`);
             return res.status(200).json({ success: true, token: `Bearer ${token}` });
           });
         } else {
@@ -244,6 +274,8 @@ exports.loginUser = (req, res) => {
       });
     });
   } catch (e) {
+    logger.error("Erro no 'loginUser' do grupo Users");
+    logger.error(e);
     return res.status(500).json({ success: false, errors: e });
   }
 };

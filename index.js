@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const passport = require('passport');
 
 const config = require('./config');
+const logger = require('./utils/logger');
 
 // Instanciando o objeto express
 const app = express();
@@ -12,8 +13,8 @@ const app = express();
 setTimeout(
   () => mongoose
     .connect(config.mongoURI, { useNewUrlParser: true })
-    .then(() => console.log('MongoDB Connected'))
-    .catch(err => console.log(err)),
+    .then(() => logger.info('MongoDB Connected'))
+    .catch(err => logger.error(err)),
   2000,
 );
 
@@ -31,4 +32,4 @@ require('./app')(app);
 const PORT = config.port || 9000;
 
 // "Listening" o servidor na porta
-app.listen(PORT, () => console.log(`Server Running on port: ${PORT}`));
+app.listen(PORT, () => logger.info(`Server Running on port: ${PORT}`));
