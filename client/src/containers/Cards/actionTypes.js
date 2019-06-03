@@ -1,0 +1,1 @@
+export const GET_CARDS_SUCCESS = 'GET_CARDS_SUCCESS';
