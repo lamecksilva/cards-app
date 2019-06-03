@@ -112,6 +112,7 @@ exports.getUser = (req, res) => {
   } catch (err) {
     logger.error('Erro no getUser do grupo Users');
     logger.error(err);
+    
     return res.status(500).json({ success: false, errors: err });
   }
 };
@@ -150,6 +151,7 @@ exports.updateUser = (req, res) => {
   } catch (err) {
     logger.error("Erro no 'updateUser' do grupo Users");
     logger.error(err);
+
     return res.status(500).json({ success: false, errors: err });
   }
 };
@@ -197,6 +199,7 @@ exports.updatePassword = (req, res) => {
   } catch (err) {
     logger.error("Erro no 'updatePassword' do grupo users");
     logger.error(err);
+
     return res.status(500).json({ success: false, errors: err });
   }
 };
@@ -228,6 +231,7 @@ exports.deleteUser = (req, res) => {
   } catch (err) {
     logger.error("Erro no 'deleteUser' do grupo users");
     logger.error(err);
+
     return res.status(500).json({ success: false, errors: err });
   }
 };
@@ -276,6 +280,7 @@ exports.loginUser = (req, res) => {
   } catch (e) {
     logger.error("Erro no 'loginUser' do grupo Users");
     logger.error(e);
+
     return res.status(500).json({ success: false, errors: e });
   }
 };
