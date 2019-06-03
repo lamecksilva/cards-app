@@ -4,6 +4,7 @@ const Card = require('./model');
 const User = require('../users/model');
 
 const validation = require('./validation');
+const logger = require('../../utils/logger');
 
 // =========================================================================================
 // Função para cadastrar um novo card
@@ -33,6 +34,8 @@ exports.registerCard = (req, res) => {
       fs.writeFile(filename, req.file.buffer, (error) => {
         if (error) throw error;
 
+        logger.info(`Salvando imagem ${filename}`);
+
         // Criando novo card
         new Card({
           title: req.body.title,
@@ -42,6 +45,8 @@ exports.registerCard = (req, res) => {
         })
           .save()
           .then((card) => {
+            logger.info(`Salvando card ${card._doc._id}`);
+
             user.cards.push(card);
             user
               .save()
@@ -52,6 +57,9 @@ exports.registerCard = (req, res) => {
       });
     });
   } catch (e) {
+    logger.error("Erro no 'registerCard' do grupo Cards");
+    logger.error(e);
+
     return res.status(500).json({ success: false, errors: e });
   }
 };
@@ -65,9 +73,13 @@ exports.getCards = (req, res) => {
       .exec((err, cards) => {
         if (err) throw err;
 
+        logger.info('Retornarndo todos cards');
         return res.status(200).json({ success: true, cards });
       });
   } catch (e) {
+    logger.error("Erro no 'getCards' do grupo Cards");
+    logger.error(e);
+
     return res.status(500).json({ success: false, errors: e });
   }
 };
@@ -92,9 +104,14 @@ exports.editCard = (req, res) => {
         return res.status(404).json({ success: false, errors: { id: 'Sem cards para este ID' } });
       }
 
+      logger.info(`Atualizando card ${card._doc._id}`);
+
       return res.status(200).json({ success: true, card });
     });
   } catch (e) {
+    logger.error("Erro no 'editCard' do grupo Cards");
+    logger.error(e);
+
     return res.status(500).json({ success: false, errors: e });
   }
 };
@@ -132,6 +149,8 @@ exports.updateImage = (req, res) => {
         fs.writeFile(filename, req.file.buffer, (error) => {
           if (error) throw error;
 
+          logger.info(`Atualizando imagem ${filename}`);
+
           // Setando o novo filename
           card.image = filename;
 
@@ -144,6 +163,9 @@ exports.updateImage = (req, res) => {
       });
     });
   } catch (e) {
+    logger.error("Erro no 'editCard' do grupo Cards");
+    logger.error(e);
+
     return res.status(500).json({ success: false, errors: e });
   }
 };
