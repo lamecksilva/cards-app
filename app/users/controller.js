@@ -15,12 +15,12 @@ exports.getUsers = (req, res) => {
   try {
     // "Querying" os usuários do banco de dados
     User.find({}, { password: 0, __v: 0 })
-      .populate('cards')
+      .populate({ path: 'cards', select: '-__v' })
       .exec((err, users) => {
         // Se dê algum problema, cairá no catch
         if (err) throw err;
 
-        logger.info('Returning all users');
+        logger.info('Retornando todos usuários');
 
         // Retornando todos usuários
         return res.status(200).json({ success: true, users });
@@ -112,7 +112,7 @@ exports.getUser = (req, res) => {
   } catch (err) {
     logger.error('Erro no getUser do grupo Users');
     logger.error(err);
-    
+
     return res.status(500).json({ success: false, errors: err });
   }
 };

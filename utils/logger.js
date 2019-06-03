@@ -29,11 +29,11 @@ const logger = winston.createLogger({
   ],
 });
 
-logger.error('Error message Here');
-logger.warn('Warning here');
-logger.info('Info of the server Here');
-logger.verbose('Verbose here');
-logger.debug('Debugging the server');
-logger.silly('Silly Here');
+// logger.error('Error message Here');
+// logger.warn('Warning here');
+// logger.info('Info of the server Here');
+// logger.verbose('Verbose here');
+// logger.debug('Debugging the server');
+// logger.silly('Silly Here');
 
 module.exports = logger;
