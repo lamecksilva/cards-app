@@ -20,6 +20,7 @@ setTimeout(
 
 app.use(bodyParser.json());
 app.use('/images', express.static('images'));
+app.use('/log', express.static('log/combined.log'));
 app.use(passport.initialize());
 
 // Aplicando middlewares do passport para autenticacao de rotas
