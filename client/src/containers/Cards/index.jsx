@@ -15,9 +15,11 @@ class Cards extends Component {
   render() {
     return (
       <Container>
-        <Grid container>
+        <Grid container spacing={4}>
           {this.props.cards.map(item => (
-            <CardItem key={item._id} data={item} user={item.user} />
+            <Grid item xs={12} sm={6} md={4} lg={4} xl={4}>
+              <CardItem key={item._id} data={item} user={item.user} />
+            </Grid>
           ))}
         </Grid>
       </Container>
