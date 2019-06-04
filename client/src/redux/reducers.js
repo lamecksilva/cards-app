@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 
-import example from '@/containers/Example/reducer';
+// import example from '@/containers/Example/reducer';
+import Cards from '@/containers/Cards/reducer';
 
 /*
   Conforme a aplicação cresce, é preciso separar o reducer em pequenas partes para
@@ -8,5 +9,6 @@ import example from '@/containers/Example/reducer';
   se usa uma "helper function" chamada `combineReducers`
 */
 export default combineReducers({
-  example,
+  // example,
+  Cards,
 });
