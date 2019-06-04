@@ -169,3 +169,43 @@ exports.updateImage = (req, res) => {
     return res.status(500).json({ success: false, errors: e });
   }
 };
+
+// =========================================================================================
+// Função para excluir um card
+exports.deleteCard = (req, res) => {
+  const { id } = req.params;
+
+  const { errors, isValid } = validation.validateObjectID(id);
+
+  if (!isValid) {
+    return res.status(400).json({ success: false, errors });
+  }
+
+  try {
+    Card.findOneAndDelete({ _id: id }, (err, card) => {
+      if (err) throw err;
+
+      if (!card) {
+        return res.status(404).json({ success: false, errors: { id: 'Sem cards para este ID' } });
+      }
+
+      User.findOne({ _id: card.user }, (e, user) => {
+        if (e) throw e;
+
+        const index = user.cards.indexOf(card._doc._id);
+
+        user.cards.splice(index, 1);
+
+        user
+          .save()
+          .then(c => res.status(200).json({ success: true, c }))
+          .catch(error => res.status(400).json({ success: false, errors: error }));
+      });
+    });
+  } catch (e) {
+    logger.error("Erro no 'deleteCard' do grupo Cards");
+    logger.error(e);
+
+    return res.status(500).json({ success: false, errors: e });
+  }
+};
