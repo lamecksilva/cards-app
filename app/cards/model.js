@@ -21,6 +21,10 @@ const CardSchema = new Schema(
       required: true,
       ref: 'user',
     },
+    date: {
+      type: Date,
+      default: Date.now,
+    },
   },
   {
     collection: 'cards',

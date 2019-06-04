@@ -23,8 +23,8 @@ class Cards extends Component {
         <Divider />
         <Grid container spacing={4} className="mt-3 mb-3">
           {this.props.cards.map(item => (
-            <Grid item xs={12} sm={6} md={4} lg={4} xl={4}>
-              <CardItem key={item._id} data={item} user={item.user} />
+            <Grid item xs={12} sm={6} md={4} lg={4} xl={4} key={item._id}>
+              <CardItem data={item} user={item.user} />
             </Grid>
           ))}
         </Grid>
