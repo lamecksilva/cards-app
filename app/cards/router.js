@@ -117,25 +117,17 @@ router.put('/update-image/:id', upload.single('image'), controller.updateImage);
  *    /api/cards/5cf71766d72e130011ecaab4
  *  @apiExample {response} Response (exemplo)
  *  {
- *   "success": true,
- *   "card": {
- *       "cards": [
- *           "5cf2fe31a872db00113ad620",
- *           "5cf2fec3f2c92b0032a5f044",
- *           "5cf529b4c190c900f864316f",
- *           "5cf52bb5c190c900f8643170",
- *           "5cf52dffc190c900f8643171",
- *           "5cf716e3d72e130011ecaab2",
- *           "5cf7171dd72e130011ecaab3"
- *       ],
- *       "_id": "5cf2fde9a872db00113ad61f",
- *       "name": "Lameck Sanders",
- *       "email": "lameck@lsdev.com",
- *       "password": "$2a$10$WGmmfxN1.DyJrAvkxhnhaeqZGdAZ3GwIufbaEBCxTtmStf5Pmj1su",
- *       "date": "2019-06-01T22:36:25.196Z",
- *       "__v": 9
- *   }
- * }
+ *    "success": true,
+ *    "card": {
+ *      "_id": "5cf7f6f0a62b84008912a0dd",
+ *      "title": "Lameck Sanderson",
+ *      "description": "Lameck Sanderson",
+ *      "user": "5cf71c735aef4b00527687bf",
+ *      "image": "images/1559754480545-5cf71c735aef4b00527687bf.jpg",
+ *      "date": "2019-06-05T17:08:00.550Z",
+ *      "__v": 0
+ *    }
+ *  }
  */
 router.delete('/:id', controller.deleteCard);
 
