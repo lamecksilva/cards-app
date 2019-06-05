@@ -58,7 +58,7 @@ router.post('/register', upload.single('image'), controller.registerCard);
 
 /**
  *  @apiGroup Card
- *  @api {patch} api/update/:id Atualizar card
+ *  @api {patch} api/cards/update/:id Atualizar card
  *  @apiParam {String} id ObjectId do card (Required)
  *  @apiParam {String} title Título do Card (Required)
  *  @apiParam {String} description Descrição do card (Optional)
@@ -86,7 +86,7 @@ router.patch('/update/:id', controller.editCard);
 
 /**
  *  @apiGroup Card
- *  @api {put} api/update-image/:id Atualizar imagem de card
+ *  @api {put} api/cards/update-image/:id Atualizar imagem de card
  *  @apiParam {String} id ObjectId do card (Required)
  *  @apiParam {File} image  Imagem do card (Required)
  *  @apiExample {request} Request Multipart Form Data (exemplo)
@@ -108,5 +108,27 @@ router.patch('/update/:id', controller.editCard);
  *    }
  */
 router.put('/update-image/:id', upload.single('image'), controller.updateImage);
+
+/**
+ *  @apiGroup Card
+ *  @api {delete} api/cards/:id Remover um card
+ *  @apiParam {String} id ObjectId do card (Required)
+ *  @apiExample {request} Request (exemplo)
+ *    /api/cards/5cf71766d72e130011ecaab4
+ *  @apiExample {response} Response (exemplo)
+ *  {
+ *    "success": true,
+ *    "card": {
+ *      "_id": "5cf7f6f0a62b84008912a0dd",
+ *      "title": "Lameck Sanderson",
+ *      "description": "Lameck Sanderson",
+ *      "user": "5cf71c735aef4b00527687bf",
+ *      "image": "images/1559754480545-5cf71c735aef4b00527687bf.jpg",
+ *      "date": "2019-06-05T17:08:00.550Z",
+ *      "__v": 0
+ *    }
+ *  }
+ */
+router.delete('/:id', controller.deleteCard);
 
 module.exports = router;
