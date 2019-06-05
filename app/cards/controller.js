@@ -69,7 +69,7 @@ exports.registerCard = (req, res) => {
 exports.getCards = (req, res) => {
   try {
     Card.find({}, { __v: 0 })
-      .populate({ path: 'user', select: '-password -__v' })
+      .populate({ path: 'user', select: '-password -__v -cards -date' })
       .exec((err, cards) => {
         if (err) throw err;
 
@@ -164,6 +164,46 @@ exports.updateImage = (req, res) => {
     });
   } catch (e) {
     logger.error("Erro no 'editCard' do grupo Cards");
+    logger.error(e);
+
+    return res.status(500).json({ success: false, errors: e });
+  }
+};
+
+// =========================================================================================
+// Função para excluir um card
+exports.deleteCard = (req, res) => {
+  const { id } = req.params;
+
+  const { errors, isValid } = validation.validateObjectID(id);
+
+  if (!isValid) {
+    return res.status(400).json({ success: false, errors });
+  }
+
+  try {
+    Card.findOneAndDelete({ _id: id }, (err, card) => {
+      if (err) throw err;
+
+      if (!card) {
+        return res.status(404).json({ success: false, errors: { id: 'Sem cards para este ID' } });
+      }
+
+      User.findOne({ _id: card.user }, (e, user) => {
+        if (e) throw e;
+
+        const index = user.cards.indexOf(card._doc._id);
+
+        index !== 1 && user.cards.splice(index, 1);
+
+        user
+          .save()
+          .then(c => res.status(200).json({ success: true, card }))
+          .catch(error => res.status(400).json({ success: false, errors: error }));
+      });
+    });
+  } catch (e) {
+    logger.error("Erro no 'deleteCard' do grupo Cards");
     logger.error(e);
 
     return res.status(500).json({ success: false, errors: e });

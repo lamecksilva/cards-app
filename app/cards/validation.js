@@ -85,3 +85,24 @@ exports.validateImageInput = (mimetype) => {
     errors,
   };
 };
+
+exports.validateObjectID = (id) => {
+  const errors = {};
+
+  // Se o id for vazio, ele é igualado a uma string vazia, para evitar erros com "undefined"
+  id = !isEmpty(id) ? id : '';
+
+  if (!ObjectId.isValid(id)) {
+    errors.id = 'Não é um ObjectID válido';
+  }
+
+  // Se o id é vazio
+  if (isEmpty(id)) {
+    errors.id = 'O ID não pode ser vazio';
+  }
+
+  return {
+    isValid: isEmpty(errors),
+    errors,
+  };
+};
