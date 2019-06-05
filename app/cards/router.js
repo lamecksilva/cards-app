@@ -27,6 +27,33 @@ const controller = require('./controller');
  */
 router.get('/', controller.getCards);
 
+
+/** 
+ *  @apiGroup Card
+ *  @api {get} api/cards/:id Retorna card
+ *  @apiParam {String} id ObjectId do Card
+ *  @apiExample {request} Request (exemplo)
+ *    api/cards/5cf7f213d1a2890036f97ec1
+ *  @apiExample {response} Response (exemplo)
+ *  {
+ *    "success": true,
+ *    "card": {
+ *      "_id": "5cf7f213d1a2890036f97ec1",
+ *      "title": "Lameck Sanderson",
+ *      "description": "Lameck Sanderson",
+ *      "user": {
+ *        "_id": "5cf71c735aef4b00527687bf",
+ *        "name": "Lameck Sanderson",
+ *        "email": "lameck@lsdev.com"
+ *      },
+ *      "image": "images/1559753235955-5cf71c735aef4b00527687bf.jpg",
+ *      "date": "2019-06-05T16:47:15.967Z"
+ *    }
+ *  }
+ *    
+*/
+router.get("/:id", controller.getCard)
+
 /**
  *  @apiGroup Card
  *  @api  {post} api/cards/register Adicionar Card
