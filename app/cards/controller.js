@@ -198,7 +198,7 @@ exports.deleteCard = (req, res) => {
 
         user
           .save()
-          .then(c => res.status(200).json({ success: true, card: c }))
+          .then(c => res.status(200).json({ success: true, card }))
           .catch(error => res.status(400).json({ success: false, errors: error }));
       });
     });
