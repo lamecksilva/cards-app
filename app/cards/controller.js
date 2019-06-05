@@ -194,11 +194,11 @@ exports.deleteCard = (req, res) => {
 
         const index = user.cards.indexOf(card._doc._id);
 
-        user.cards.splice(index, 1);
+        index !== 1 && user.cards.splice(index, 1);
 
         user
           .save()
-          .then(c => res.status(200).json({ success: true, c }))
+          .then(c => res.status(200).json({ success: true, card: c }))
           .catch(error => res.status(400).json({ success: false, errors: error }));
       });
     });

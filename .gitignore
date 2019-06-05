@@ -3,4 +3,5 @@ data
 doc
 yarn-error.log
 images
-.log
+log
+combined.log
