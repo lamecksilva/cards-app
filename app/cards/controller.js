@@ -69,7 +69,7 @@ exports.registerCard = (req, res) => {
 exports.getCards = (req, res) => {
   try {
     Card.find({}, { __v: 0 })
-      .populate({ path: 'user', select: '-password -__v' })
+      .populate({ path: 'user', select: '-password -__v -cards -date' })
       .exec((err, cards) => {
         if (err) throw err;
 
