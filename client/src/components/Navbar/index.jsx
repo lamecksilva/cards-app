@@ -14,7 +14,9 @@ export default function Navbar() {
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
-          <Typography variant="h6">Cards App</Typography>
+          <Typography variant="h5" component="h3">
+            Cards App
+          </Typography>
           <Button color="inherit" className={classes.mrAuto} component={Link} to="/">
             Criar Card
           </Button>
