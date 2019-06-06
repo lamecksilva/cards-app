@@ -9,6 +9,7 @@ import theme from './utils/theme';
 import Example from './containers/Example';
 import Cards from './containers/Cards';
 import Navbar from './components/Navbar';
+import Register from './containers/Register';
 
 // Componente mais acima da aplicação, que será renderizado diretamente na div "root"
 const App = () => (
@@ -19,6 +20,7 @@ const App = () => (
       <Router>
         <Navbar />
         <Route path="/" exact component={Cards} />
+        <Route path="/register" exact component={Register} />
       </Router>
     </ThemeProvider>
   </Provider>

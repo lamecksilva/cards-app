@@ -5,9 +5,19 @@ const styles = makeStyles(theme => ({
     flexGrow: 1,
   },
   title: {
-    flexGrow: 1,
+    textDecoration: 'none',
+    color: theme.palette.primary.contrastText,
+    '&:hover': {
+      color: theme.palette.primary.dark,
+      textDecoration: 'none',
+    },
   },
-  mrAuto: {
+  link: {
+    '&:hover': {
+      color: theme.palette.primary.contrastText,
+    },
+  },
+  createCard: {
     marginRight: 'auto',
     marginLeft: '2vw',
     '&:hover': {
