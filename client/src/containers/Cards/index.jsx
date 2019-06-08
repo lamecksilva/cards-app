@@ -26,7 +26,7 @@ class Cards extends Component {
 
     return (
       <Container>
-        <Typography component="h5" variant="h2" align="center" className="mt-3 mb-3">
+        <Typography component="h4" variant="h2" align="center" className="mt-3 mb-3">
           Cards
         </Typography>
         <Divider />
@@ -51,7 +51,7 @@ class Cards extends Component {
         ) : (
           // Caso tudo dê certo
           <Grid container spacing={4} className="mt-3 mb-3">
-            {this.props.cards.map(item => (
+            {cards.map(item => (
               <Grid item xs={12} sm={6} md={4} lg={4} xl={4} key={item._id}>
                 <CardItem data={item} user={item.user} />
               </Grid>

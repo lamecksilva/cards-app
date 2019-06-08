@@ -13,6 +13,7 @@ import {
   MenuItem,
 } from '@material-ui/core';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+
 import styles from './styles';
 
 const CardItem = ({ data, user, classes }) => {
@@ -46,10 +47,13 @@ const CardItem = ({ data, user, classes }) => {
           </div>
 )}
         subheader={new Date(data.date).toLocaleString()}
-        title={data.title}
+        title={user.name}
       />
       <CardMedia className={classes.media} image={`api/${data.image}`} title={data.title} />
       <CardContent>
+        <Typography gutterBottom variant="h5" component="h2">
+          {data.title}
+        </Typography>
         <Typography variant="body2" color="textSecondary" component="p">
           {data.description}
         </Typography>
@@ -58,4 +62,4 @@ const CardItem = ({ data, user, classes }) => {
   );
 };
 
-export default withStyles(styles)(CardItem);
+export default withStyles(styles, { withTheme: true })(CardItem);
