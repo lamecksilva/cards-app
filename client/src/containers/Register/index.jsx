@@ -40,9 +40,8 @@ class Register extends Component {
     e.preventDefault();
 
     const { history } = this.props;
-    const data = { ...this.state };
 
-    this.props.registerUser(data, history);
+    this.props.registerUser(this.state, history);
   }
 
   render() {
@@ -78,7 +77,7 @@ class Register extends Component {
             <Grid item xs={12} sm={8} className={classes.formGrid}>
               <FormControl fullWidth error={Boolean(errors.password)}>
                 <InputLabel>Senha</InputLabel>
-                <Input onChange={this.handleChange} name="password" />
+                <Input onChange={this.handleChange} name="password" type="password" />
                 <FormHelperText>
                   {Boolean(errors.password) === true ? errors.password : 'Crie uma senha'}
                 </FormHelperText>
@@ -88,7 +87,7 @@ class Register extends Component {
             <Grid item xs={12} sm={8} className={classes.formGrid}>
               <FormControl fullWidth error={Boolean(errors.password2)}>
                 <InputLabel>Confirmação de senha</InputLabel>
-                <Input onChange={this.handleChange} name="password2" />
+                <Input onChange={this.handleChange} name="password2" type="password" />
                 <FormHelperText>
                   {Boolean(errors.password2) === true ? errors.password2 : 'Confirme a sua senha'}
                 </FormHelperText>
