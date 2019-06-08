@@ -1,5 +1,12 @@
-import { makeStyles } from '@material-ui/styles';
-
-const styles = makeStyles(theme => ({}));
+const styles = theme => ({
+  root: {
+    width: '45vw',
+    margin: '6vh auto',
+    height: '75vh',
+  },
+  title: {
+    textAlign: 'center',
+  },
+});
 
 export default styles;
