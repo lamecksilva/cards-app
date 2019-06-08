@@ -2,7 +2,8 @@ const styles = theme => ({
   root: {
     width: '45vw',
     margin: '3vh auto',
-    height: '75vh',
+    minHeight: '75vh',
+    height: '100%',
   },
   title: {
     textAlign: 'center',

@@ -1,4 +1,8 @@
-import { REGISTER_USER_LOADING, REGISTER_USER_FAILURE } from './actionsTypes';
+import {
+  REGISTER_USER_LOADING,
+  REGISTER_USER_FAILURE,
+  REGISTER_USER_SUCCESS,
+} from './actionsTypes';
 
 const initialState = {
   errors: {},
@@ -10,6 +14,7 @@ export default (state = initialState, action) => {
     case REGISTER_USER_LOADING:
       return {
         ...state,
+        errors: {},
         loading: true,
       };
 
