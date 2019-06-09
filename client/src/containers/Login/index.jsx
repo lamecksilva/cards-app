@@ -54,7 +54,7 @@ class Login extends Component {
     return (
       <Container>
         <Paper className={classes.root}>
-          <Typography variant="h4" component="h5" className={classes.title}>
+          <Typography component="h4" variant="h2" align="center" className={classes.title}>
             Login
           </Typography>
 
@@ -62,7 +62,7 @@ class Login extends Component {
             <Grid item xs={12} sm={8} className={classes.formGrid}>
               <FormControl fullWidth error={Boolean(errors.email)}>
                 <InputLabel>Email</InputLabel>
-                <Input onChange={this.handleChange} name="email" />
+                <Input onChange={this.handleChange} name="email" type="email" />
                 <FormHelperText>
                   {Boolean(errors.email) === true ? errors.email : 'E.g: example@hotmail.com'}
                 </FormHelperText>

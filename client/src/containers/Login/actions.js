@@ -4,7 +4,7 @@ import jwt_decode from 'jwt-decode';
 import { LOGIN_USER_SUCCESS, LOGIN_USER_FAILURE, LOGIN_USER_LOADING } from './actionTypes';
 import setAuthToken from '../../utils/setAuthToken';
 
-export const loginUser = (data) => (dispatch) => {
+export const loginUser = data => (dispatch) => {
   dispatch({ type: LOGIN_USER_LOADING });
 
   axios
@@ -15,6 +15,8 @@ export const loginUser = (data) => (dispatch) => {
       const { token } = response.data;
 
       localStorage.setItem('jwtToken', token);
+
+      setAuthToken(token);
 
       const decoded = jwt_decode(token);
 
