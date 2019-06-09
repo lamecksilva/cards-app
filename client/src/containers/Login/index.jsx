@@ -13,6 +13,7 @@ import {
   CircularProgress,
 } from '@material-ui/core';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 import styles from './styles';
 import { loginUser } from './actions';
@@ -43,7 +44,13 @@ class Login extends Component {
   }
 
   render() {
-    const { classes, errors, loading } = this.props;
+    const {
+      classes, errors, loading, isAuthenticated,
+    } = this.props;
+
+    if (isAuthenticated) {
+      return <Redirect to="/" />;
+    }
     return (
       <Container>
         <Paper className={classes.root}>
@@ -98,9 +105,9 @@ class Login extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { errors, loading } = state.Login;
+  const { errors, loading, isAuthenticated } = state.Login;
 
-  return { errors, loading };
+  return { errors, loading, isAuthenticated };
 };
 
 const mapDispatchToProps = {
