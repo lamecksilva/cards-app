@@ -1,6 +1,4 @@
-import { makeStyles } from '@material-ui/core/styles';
-
-const styles = makeStyles(theme => ({
+const styles = theme => ({
   root: {
     flexGrow: 1,
   },
@@ -24,6 +22,6 @@ const styles = makeStyles(theme => ({
       color: theme.palette.primary.contrastText,
     },
   },
-}));
+});
 
 export default styles;
