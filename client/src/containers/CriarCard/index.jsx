@@ -16,6 +16,7 @@ import { connect } from 'react-redux';
 
 import styles from './styles';
 import CardItem from '../../components/CardItem';
+import { createCard } from './actions';
 
 class CriarCard extends Component {
   constructor(props) {
@@ -46,12 +47,23 @@ class CriarCard extends Component {
   }
 
   handleSubmit(e) {
-    console.log(this.state);
+    const { history } = this.props;
+    const formData = new FormData();
+
+    console.log(this.state)
+
+    formData.append('image', this.state.imageFile);
+    formData.append('title', this.state.title);
+    formData.append('description', this.state.description);
+    formData.append('user', this.props.user._id);
+
+    this.props.createCard(formData, history);
   }
 
   render() {
-    const { classes, user } = this.props;
-    const errors = {};
+    const {
+      classes, user, loading, errors,
+    } = this.props;
     return (
       <Container>
         <Paper className={classes.root}>
@@ -118,8 +130,16 @@ class CriarCard extends Component {
 
 const mapStateToProps = (state) => {
   const { user } = state.Login;
+  const { errors, loading } = state.CriarCard;
 
-  return { user };
+  return { user, errors, loading };
 };
 
-export default connect(mapStateToProps)(withStyles(styles, { withTheme: true })(CriarCard));
+const mapDispatchToProps = {
+  createCard,
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(withStyles(styles, { withTheme: true })(CriarCard));
