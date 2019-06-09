@@ -46,10 +46,19 @@ const CardItem = ({ data, user, classes }) => {
             </Menu>
           </div>
 )}
-        subheader={new Date(data.date).toLocaleString()}
+        subheader={new Date(data.date).toLocaleString('pt-BR')}
         title={user.name}
       />
-      <CardMedia className={classes.media} image={`api/${data.image}`} title={data.title} />
+      {data.image ? (
+        <CardMedia className={classes.media} image={`api/${data.image}`} title={data.title} />
+      ) : (
+        <CardMedia
+          className={classes.media}
+          image="http://media.buzzle.com/media/images-en/photos/mammals/foxes/1200-43438902-red-fox.jpg"
+          title={data.title}
+        />
+      )}
+
       <CardContent>
         <Typography gutterBottom variant="h5" component="h2">
           {data.title}
