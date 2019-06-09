@@ -26,14 +26,23 @@ class CriarCard extends Component {
       description: '',
       image: null,
       date: Date.now(),
+      imageFile: null,
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleImageChange = this.handleImageChange.bind(this);
   }
 
   handleChange(e) {
     this.setState({ [e.target.name]: e.target.value });
+  }
+
+  handleImageChange(e) {
+    this.setState({ imageFile: e.target.files[0] });
+    const reader = new FileReader();
+    reader.onload = event => this.setState({ image: event.target.result });
+    reader.readAsDataURL(e.target.files[0]);
   }
 
   handleSubmit(e) {
@@ -79,16 +88,13 @@ class CriarCard extends Component {
 
                 <FormControl fullWidth error={Boolean(errors.image)}>
                   <InputLabel>Imagem</InputLabel>
-                  <Input onChange={this.handleChange} name="image" type="file" />
+                  <Input onChange={this.handleImageChange} name="image" type="file" />
+                  <FormHelperText>
+                    {Boolean(errors.image) === true ? errors.image : 'Selecione a imagem do card'}
+                  </FormHelperText>
                 </FormControl>
 
-                <Button
-                  color="secondary"
-                  variant="contained"
-                  fullWidth
-                  className="mt-3"
-                  onClick={this.handleSubmit}
-                >
+                <Button color="secondary" variant="contained" fullWidth onClick={this.handleSubmit}>
                   Confirmar
                 </Button>
               </Grid>
@@ -100,7 +106,7 @@ class CriarCard extends Component {
               </Typography>
 
               <Grid item xs={12} sm={8} className={classes.cardContainer}>
-                <CardItem user={user} data={this.state} />
+                <CardItem user={user} data={this.state} image={this.state.image} />
               </Grid>
             </Grid>
           </Grid>

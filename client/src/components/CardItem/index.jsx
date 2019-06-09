@@ -16,7 +16,9 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 import styles from './styles';
 
-const CardItem = ({ data, user, classes }) => {
+const CardItem = ({
+  data, user, classes, image,
+}) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   function handleClick(event) {
@@ -49,7 +51,9 @@ const CardItem = ({ data, user, classes }) => {
         subheader={new Date(data.date).toLocaleString('pt-BR')}
         title={user.name}
       />
-      {data.image ? (
+      {image ? (
+        <CardMedia className={classes.media} image={image} title={data.title} />
+      ) : data.image ? (
         <CardMedia className={classes.media} image={`api/${data.image}`} title={data.title} />
       ) : (
         <CardMedia
