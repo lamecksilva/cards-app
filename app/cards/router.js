@@ -1,5 +1,5 @@
 const multer = require('multer');
-const path = require('path');
+const passport = require('passport');
 
 const upload = multer();
 const router = require('express').Router();
@@ -27,8 +27,7 @@ const controller = require('./controller');
  */
 router.get('/', controller.getCards);
 
-
-/** 
+/**
  *  @apiGroup Card
  *  @api {get} api/cards/:id Retorna card
  *  @apiParam {String} id ObjectId do Card
@@ -50,9 +49,9 @@ router.get('/', controller.getCards);
  *      "date": "2019-06-05T16:47:15.967Z"
  *    }
  *  }
- *    
-*/
-router.get("/:id", controller.getCard)
+ *
+ */
+router.get('/:id', controller.getCard);
 
 /**
  *  @apiGroup Card
@@ -81,7 +80,12 @@ router.get("/:id", controller.getCard)
  *      }
  *    }
  */
-router.post('/register', upload.single('image'), controller.registerCard);
+router.post(
+  '/register',
+  passport.authenticate('jwt', { session: false }),
+  upload.single('image'),
+  controller.registerCard,
+);
 
 /**
  *  @apiGroup Card

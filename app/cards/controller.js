@@ -10,6 +10,7 @@ const logger = require('../../utils/logger');
 // Função para cadastrar um novo card
 exports.registerCard = (req, res) => {
   // Validando campos do body
+  console.log(req.file)
   const { isValid, errors } = validation.validateRegisterInput(req.body, req.file.mimetype);
 
   if (!isValid) {
