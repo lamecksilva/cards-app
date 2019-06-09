@@ -3,6 +3,7 @@ import { combineReducers } from 'redux';
 // import example from '@/containers/Example/reducer';
 import Cards from '@/containers/Cards/reducer';
 import Register from '@/containers/Register/reducer';
+import Login from '@/containers/Login/reducer';
 
 /*
   Conforme a aplicação cresce, é preciso separar o reducer em pequenas partes para
@@ -13,4 +14,5 @@ export default combineReducers({
   // example,
   Cards,
   Register,
+  Login,
 });

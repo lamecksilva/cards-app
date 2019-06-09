@@ -23,7 +23,7 @@ export default function Navbar() {
           <Button color="inherit" className={classes.link} component={Link} to="/register">
             Cadastrar-se
           </Button>
-          <Button color="inherit" className={classes.link} component={Link} to="/">
+          <Button color="inherit" className={classes.link} component={Link} to="/login">
             Login
           </Button>
         </Toolbar>
