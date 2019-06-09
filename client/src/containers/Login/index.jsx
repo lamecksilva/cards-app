@@ -54,7 +54,7 @@ class Login extends Component {
     return (
       <Container>
         <Paper className={classes.root}>
-          <Typography variant="h4" component="h5" className={classes.title}>
+          <Typography component="h4" variant="h2" align="center" className={classes.title}>
             Login
           </Typography>
 
