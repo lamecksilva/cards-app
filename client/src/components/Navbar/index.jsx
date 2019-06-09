@@ -17,7 +17,7 @@ export default function Navbar() {
           <Typography variant="h5" component={Link} to="/" className={classes.title}>
             Cards App
           </Typography>
-          <Button color="inherit" className={classes.createCard} component={Link} to="/">
+          <Button color="inherit" className={classes.createCard} component={Link} to="/criar-card">
             Criar Card
           </Button>
           <Button color="inherit" className={classes.link} component={Link} to="/register">
