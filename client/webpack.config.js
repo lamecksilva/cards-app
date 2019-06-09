@@ -36,6 +36,7 @@ module.exports = {
       template: './src/index.html',
       // favicon: "./src/favicon.ico"
       filename: './index.html',
+      minify: true,
     }),
   ],
   // Configurações do servidor de desenvolvimento

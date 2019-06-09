@@ -85,6 +85,35 @@ exports.getCards = (req, res) => {
 };
 
 // =========================================================================================
+// Função para retornar um card
+exports.getCard = (req, res) => {
+  const { id } = req.params;
+
+  const { isValid, errors } = validation.validateObjectID(id);
+
+  if (!isValid) {
+    return res.status(400).json({ success: false, errors });
+  }
+
+  try {
+    Card.findOne({ _id: id }, { __v: 0 })
+      .populate({ path: 'user', select: '-password -__v -cards -date' })
+      .exec((err, card) => {
+        if (err) throw err;
+
+        logger.info(`Retornando card id: ${card._doc._id}`);
+
+        return res.status(200).json({ success: true, card });
+      });
+  } catch (e) {
+    logger.error("Erro no 'getCard' do grupo Cards");
+    logger.error(e);
+
+    return res.status(500).json({ success: false, errors: e });
+  }
+};
+
+// =========================================================================================
 // Função para editar os cards
 exports.editCard = (req, res) => {
   const { id } = req.params;

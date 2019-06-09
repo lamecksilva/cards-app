@@ -7,7 +7,7 @@ const styles = theme => ({
     paddingTop: '56.25%', // 16:9
   },
   avatar: {
-    backgroundColor: '#f44336',
+    backgroundColor: theme.palette.secondary.main,
   },
 });
 
