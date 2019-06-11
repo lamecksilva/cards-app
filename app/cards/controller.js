@@ -1,5 +1,7 @@
 const path = require('path');
 const fs = require('fs');
+const cron = require('node-cron');
+
 const Card = require('./model');
 const User = require('../users/model');
 
@@ -10,7 +12,7 @@ const logger = require('../../utils/logger');
 // Função para cadastrar um novo card
 exports.registerCard = (req, res) => {
   // Validando campos do body
-  console.log(req.file)
+  console.log(req.file);
   const { isValid, errors } = validation.validateRegisterInput(req.body, req.file.mimetype);
 
   if (!isValid) {
@@ -239,3 +241,55 @@ exports.deleteCard = (req, res) => {
     return res.status(500).json({ success: false, errors: e });
   }
 };
+
+
+cron.schedule('10 * * * *', () => {
+  // console.log(new Date(Date.now()).toLocaleTimeString('pt-BR'));
+
+  logger.info("Realizando cronjob para remover imagens não salvas")
+
+  try {
+    // Retorna todos documentos do banco
+    Card.find({}, (err, cards) => {
+      if (err) throw err;
+  
+      // Trata o array para conter apenas os dados
+      cards.map(card => card._doc);
+  
+      // console.log(cards);
+      // Lê o folder images e retorna os arquivos
+      fs.readdir('images', (err, fileNames) => {
+        if (err) throw err;
+  
+        // console.dir(fileNames);
+        // Executa o callback para cada item
+        fileNames.forEach((item) => {
+          // Procura a imagem nos documentos 
+          const catched = cards.find(c => c.image.split('/')[1] === item);
+  
+          // Caso a imagem exista, retorna "nada" e finaliza esse callback
+          if (catched) {
+            // console.log(cards.find(c => c.image.split('/')[1] === item))
+            return
+          } else {
+            // Caso não encontre a image, remove do file system
+            fs.unlinkSync(`images/${item}`, (err) => {
+              if (err) throw err;
+
+              logger.info(`Removendo imagem ${item}`)
+            });
+          }
+        });
+      });
+    });
+  } catch (e) {
+    console.log(e);
+  }
+  
+});
+
+// Varrer o banco de dados para retornar todas imagens cadastradas
+// Varrer o folder images para retornar as imagens salvas
+// Checar se alguma imagem salva não existe no banco
+// Se não existe,a remove
+
