@@ -22,6 +22,10 @@ exports.registerCard = (req, res) => {
   try {
     // Buscando usuário pelo id
     User.findOne({ _id: req.body.user }, (err, user) => {
+      if (!fs.existsSync("images")) {
+        fs.mkdirSync("images")
+      }
+
       // Criando nome do novo arquivo com base no timestamp e na extensão original do arquivo
       const filename = `images/${Date.now()}-${user._doc._id}${path.extname(
         req.file.originalname,
