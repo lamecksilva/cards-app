@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const passport = require('passport');
+const path = require('path');
 
 const config = require('./config');
 const logger = require('./utils/logger');
@@ -20,7 +21,7 @@ setTimeout(
 
 app.use(bodyParser.json());
 app.use('/api/images', express.static('images'));
-app.use('/log', express.static('log/combined.log'));
+app.use('/log', express.static('/log/combined.log'));
 app.use(passport.initialize());
 
 // Aplicando middlewares do passport para autenticacao de rotas
@@ -28,6 +29,11 @@ require('./utils/passport')(passport);
 
 // Aplicando middleware para rotas, controllers e etc.
 require('./app')(app);
+
+app.use(express.static('client/dist'));
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, 'client', 'dist', 'index.html'));
+});
 
 // Declarando porta
 const PORT = config.port || 9000;
