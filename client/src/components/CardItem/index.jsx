@@ -1,7 +1,6 @@
 import React from 'react';
 
 import {
-  withStyles,
   Card,
   CardHeader,
   Avatar,
@@ -12,6 +11,8 @@ import {
   Menu,
   MenuItem,
 } from '@material-ui/core';
+
+import withStyles from '@material-ui/core/styles/withStyles';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 import styles from './styles';
