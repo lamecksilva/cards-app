@@ -12,9 +12,11 @@ import {
   FormHelperText,
   Button,
 } from '@material-ui/core';
+import { connect } from 'react-redux';
 
 import styles from './styles';
 import CardItem from '../../components/CardItem';
+import { getCardById } from './actions';
 
 class EditCard extends Component {
   constructor(props) {
@@ -25,6 +27,10 @@ class EditCard extends Component {
       description: '',
       image: '',
     };
+  }
+
+  componentDidMount(){
+    this.props.getCardById(this.props.match.params.id)
   }
 
   handleChange(e) {
@@ -45,7 +51,8 @@ class EditCard extends Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, user } = this.props;
+    const errors = {};
     return (
       <Container>
         <Paper className={classes.root}>
@@ -110,4 +117,19 @@ class EditCard extends Component {
   }
 }
 
-export default withStyles(styles, { withTheme: true })(EditCard);
+const mapStateToProps = (state) => {
+  const { user } = state.Login;
+
+  return {
+    user,
+  };
+};
+
+const mapDispatchToProps = {
+  getCardById,
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(withStyles(styles, { withTheme: true })(EditCard));
