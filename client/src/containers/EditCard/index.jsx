@@ -13,6 +13,7 @@ import {
   Button,
 } from '@material-ui/core';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 
 import styles from './styles';
 import CardItem from '../../components/CardItem';
@@ -29,8 +30,8 @@ class EditCard extends Component {
     };
   }
 
-  componentDidMount(){
-    this.props.getCardById(this.props.match.params.id)
+  componentDidMount() {
+    this.props.getCardById(this.props.match.params.id);
   }
 
   handleChange(e) {
@@ -107,7 +108,9 @@ class EditCard extends Component {
               </Typography>
 
               <Grid item xs={12} sm={8} className={classes.cardContainer}>
-                <CardItem user={user} data={this.state} image={this.state.image} />
+                <Typography component="h4" variant="h5" align="center" className="mt-3 mb-3">
+                  Hello
+                </Typography>
               </Grid>
             </Grid>
           </Grid>

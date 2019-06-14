@@ -10,7 +10,7 @@ export const createCard = (data, history) => (dispatch) => {
     .then((response) => {
       dispatch({ type: CREATE_CARD_SUCCESS });
 
-      console.log(response.data);
+      // console.log(response.data);
 
       history.push('/');
     })

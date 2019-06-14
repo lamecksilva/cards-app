@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import {
-  withStyles, IconButton, Menu, MenuItem, Grid,
+  withStyles, IconButton, Menu, MenuItem,
 } from '@material-ui/core';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import { ExitToApp } from '@material-ui/icons';
@@ -90,7 +90,7 @@ class Navbar extends React.Component {
                 >
                   <MenuItem onClick={this.onLogoutClick}>
                     {' '}
-                    <ExitToApp />
+                    <ExitToApp color="default" />
                     Logout
                   </MenuItem>
                 </Menu>
@@ -127,4 +127,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(withStyles(styles)(Navbar));
+)(withStyles(styles, {withTheme: true})(Navbar));

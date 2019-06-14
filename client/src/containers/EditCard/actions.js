@@ -10,7 +10,7 @@ export const getCardById = id => (dispatch) => {
   axios
     .get(`/api/cards/${id}`)
     .then((response) => {
-      console.log(response);
+      console.log(response.data);
 
       dispatch({ type: GET_CARD_SUCCESS });
     })
