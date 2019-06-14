@@ -18,8 +18,6 @@ PrivateRoute.propTypes = {
 const mapStateToProps = (state) => {
   const auth = state.Login;
 
-  console.log(auth);
-
   return {
     auth,
   };

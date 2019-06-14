@@ -69,7 +69,7 @@ class Navbar extends React.Component {
                 <Typography component="h5" variant="subtitle1">
                   {auth.user.name}
                   <IconButton onClick={this.handleMenu}>
-                    <AccountCircle color="default" />
+                    <AccountCircle color="inherit" />
                   </IconButton>
                 </Typography>
 
@@ -90,7 +90,7 @@ class Navbar extends React.Component {
                 >
                   <MenuItem onClick={this.onLogoutClick}>
                     {' '}
-                    <ExitToApp color="default" />
+                    <ExitToApp color="inherit" />
                     Logout
                   </MenuItem>
                 </Menu>
@@ -127,4 +127,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(withStyles(styles, {withTheme: true})(Navbar));
+)(withStyles(styles, { withTheme: true })(Navbar));
