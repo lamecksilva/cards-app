@@ -157,6 +157,8 @@ exports.editCard = (req, res) => {
 exports.updateImage = (req, res) => {
   const { id } = req.params;
 
+  console.log(req.file)
+  
   const { isValid, errors } = validation.validateImageInput(req.file.mimetype);
 
   if (!isValid) {

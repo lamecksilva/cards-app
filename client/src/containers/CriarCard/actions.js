@@ -5,12 +5,13 @@ import { CREATE_CARD_LOADING, CREATE_CARD_SUCCESS, CREATE_CARD_FAILURE } from '.
 export const createCard = (data, history) => (dispatch) => {
   dispatch({ type: CREATE_CARD_LOADING });
 
+  console.log(data);
+  console.log(data.image);
+
   axios
     .post('/api/cards/register', data, { headers: { 'Content-Type': 'multipart/form-data' } })
     .then((response) => {
       dispatch({ type: CREATE_CARD_SUCCESS });
-
-      // console.log(response.data);
 
       history.push('/');
     })

@@ -17,7 +17,7 @@ import { withRouter } from 'react-router';
 
 import styles from './styles';
 import CardItem from '../../components/CardItem';
-import { getCardById } from './actions';
+import { getCardById, updateData } from './actions';
 
 class EditCard extends Component {
   constructor(props) {
@@ -66,13 +66,29 @@ class EditCard extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
+    const {history, match} = this.props
 
     console.log(this.state);
+
+    this.props.updateData(match.params.id, this.state, history)
   }
 
   render() {
-    const { classes, user, card } = this.props;
+    const { classes, user, card, getCardError } = this.props;
     const errors = {};
+
+    if (getCardError){
+      return (
+        <Container>
+          <Paper className={classes.root}>
+
+          <Typography component="h4" variant="h4" align="center" className="mt-3 mb-3">
+            Erro ao buscar Card no banco de dados: <Typography component="h5" variant="h5" >{getCardError.id}</Typography>
+          </Typography>
+          </Paper>
+        </Container>
+      )
+    } else {
     return (
       <Container>
         <Paper className={classes.root}>
@@ -145,21 +161,24 @@ class EditCard extends Component {
         </Paper>
       </Container>
     );
+                    }
   }
 }
 
 const mapStateToProps = (state) => {
   const { user } = state.Login;
-  const { card } = state.EditCard;
+  const { card, getCardError } = state.EditCard;
 
   return {
     user,
     card,
+    getCardError
   };
 };
 
 const mapDispatchToProps = {
   getCardById,
+  updateData
 };
 
 export default connect(

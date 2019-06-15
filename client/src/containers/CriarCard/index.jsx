@@ -118,7 +118,7 @@ class CriarCard extends Component {
               </Typography>
 
               <Grid item xs={12} sm={8} className={classes.cardContainer}>
-                <CardItem user={user} data={this.state} image={this.state.image} />
+                <CardItem  create user={user} data={this.state} image={this.state.image} />
               </Grid>
             </Grid>
           </Grid>
