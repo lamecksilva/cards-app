@@ -106,7 +106,7 @@ class CriarCard extends Component {
                   </FormHelperText>
                 </FormControl>
 
-                <Button color="secondary" variant="contained" fullWidth onClick={this.handleSubmit}>
+                <Button color="secondary" variant="contained" className="mt-3" fullWidth onClick={this.handleSubmit}>
                   Confirmar
                 </Button>
               </Grid>

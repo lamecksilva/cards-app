@@ -27,11 +27,30 @@ class EditCard extends Component {
       title: '',
       description: '',
       image: '',
+      date: '',
+      imageFile: null,
+      newImage: '',
     };
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleImageChange = this.handleImageChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount() {
     this.props.getCardById(this.props.match.params.id);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.card) {
+      const { card } = nextProps;
+      this.setState({
+        title: card.title,
+        description: card.description,
+        image: card.image,
+        date: card.date,
+      });
+    }
   }
 
   handleChange(e) {
@@ -41,7 +60,7 @@ class EditCard extends Component {
   handleImageChange(e) {
     this.setState({ imageFile: e.target.files[0] });
     const reader = new FileReader();
-    reader.onload = event => this.setState({ image: event.target.result });
+    reader.onload = event => this.setState({ newImage: event.target.result });
     reader.readAsDataURL(e.target.files[0]);
   }
 
@@ -72,7 +91,7 @@ class EditCard extends Component {
               <Grid xs={12} sm={8} item className={classes.formContainer}>
                 <FormControl fullWidth error={Boolean(errors.title)}>
                   <InputLabel>Título</InputLabel>
-                  <Input onChange={this.handleChange} value={card.title} name="title" />
+                  <Input onChange={this.handleChange} value={this.state.title} name="title" />
                   <FormHelperText>
                     {Boolean(errors.title) === true ? errors.title : 'E.g: Awesome Card'}
                   </FormHelperText>
@@ -82,7 +101,7 @@ class EditCard extends Component {
                   <InputLabel>Descrição</InputLabel>
                   <Input
                     onChange={this.handleChange}
-                    value={card.description}
+                    value={this.state.description}
                     name="description"
                     multiline
                   />
@@ -101,7 +120,13 @@ class EditCard extends Component {
                   </FormHelperText>
                 </FormControl>
 
-                <Button onClick={this.handleSubmit} color="secondary" variant="contained" fullWidth >
+                <Button
+                  onClick={this.handleSubmit}
+                  color="secondary"
+                  variant="contained"
+                  className="mt-3"
+                  fullWidth
+                >
                   Confirmar
                 </Button>
               </Grid>
@@ -113,9 +138,7 @@ class EditCard extends Component {
               </Typography>
 
               <Grid item xs={12} sm={8} className={classes.cardContainer}>
-                <Typography component="h4" variant="h5" align="center" className="mt-3 mb-3">
-                  Hello
-                </Typography>
+                <CardItem edit data={this.state} user={user} image={this.state.newImage} />
               </Grid>
             </Grid>
           </Grid>
