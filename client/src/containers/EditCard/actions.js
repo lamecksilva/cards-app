@@ -10,9 +10,9 @@ export const getCardById = id => (dispatch) => {
   axios
     .get(`/api/cards/${id}`)
     .then((response) => {
-      console.log(response.data);
+      console.log(response.data.card);
 
-      dispatch({ type: GET_CARD_SUCCESS });
+      dispatch({ type: GET_CARD_SUCCESS, payload: response.data.card });
     })
     .catch((error) => {
       console.log(error);

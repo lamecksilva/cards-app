@@ -52,7 +52,7 @@ class EditCard extends Component {
   }
 
   render() {
-    const { classes, user } = this.props;
+    const { classes, user, card } = this.props;
     const errors = {};
     return (
       <Container>
@@ -72,7 +72,7 @@ class EditCard extends Component {
               <Grid xs={12} sm={8} item className={classes.formContainer}>
                 <FormControl fullWidth error={Boolean(errors.title)}>
                   <InputLabel>Título</InputLabel>
-                  <Input onChange={this.handleChange} name="title" type="text" />
+                  <Input onChange={this.handleChange} value={card.title} name="title" />
                   <FormHelperText>
                     {Boolean(errors.title) === true ? errors.title : 'E.g: Awesome Card'}
                   </FormHelperText>
@@ -80,7 +80,12 @@ class EditCard extends Component {
 
                 <FormControl fullWidth error={Boolean(errors.description)}>
                   <InputLabel>Descrição</InputLabel>
-                  <Input onChange={this.handleChange} name="description" type="text" multiline />
+                  <Input
+                    onChange={this.handleChange}
+                    value={card.description}
+                    name="description"
+                    multiline
+                  />
                   <FormHelperText>
                     {Boolean(errors.description) === true
                       ? errors.description
@@ -96,7 +101,7 @@ class EditCard extends Component {
                   </FormHelperText>
                 </FormControl>
 
-                <Button color="secondary" variant="contained" fullWidth onClick={this.handleSubmit}>
+                <Button onClick={this.handleSubmit} color="secondary" variant="contained" fullWidth >
                   Confirmar
                 </Button>
               </Grid>
@@ -122,9 +127,11 @@ class EditCard extends Component {
 
 const mapStateToProps = (state) => {
   const { user } = state.Login;
+  const { card } = state.EditCard;
 
   return {
     user,
+    card,
   };
 };
 

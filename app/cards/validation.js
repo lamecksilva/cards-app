@@ -56,8 +56,8 @@ exports.validateUpdateInput = (data) => {
   }
 
   if (!isEmpty(data.description)) {
-    if (!isLength(data.description, { min: 2, max: 120 })) {
-      errors.description = 'A descrição deve conter entre 2 e 120 caracteres';
+    if (!isLength(data.description, { min: 2, max: 480 })) {
+      errors.description = 'A descrição deve conter entre 2 e 480 caracteres';
     }
   }
 
