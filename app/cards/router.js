@@ -89,11 +89,11 @@ router.post(
 
 /**
  *  @apiGroup Card
- *  @api {patch} api/cards/update/:id Atualizar card
+ *  @api {put} api/cards/update/:id Atualizar card
  *  @apiParam {String} id ObjectId do card (Required)
  *  @apiParam {String} title Título do Card (Required)
- *  @apiParam {String} description Descrição do card (Optional)
- *  @apiParam {String} user ObjectId do Usuário autor do card
+ *  @apiParam {String} description Descrição do card (Required)
+ *  @apiParam {String} user ObjectId do Usuário autor do card (Optional)
  *  @apiExample {request} Request Body (exemplo)
  *    /api/update/5cf2f1689118660149af9002
  *    {
@@ -113,7 +113,7 @@ router.post(
  *      }
  *    }
  */
-router.patch('/update/:id', controller.editCard);
+router.put('/update/:id', controller.editCard);
 
 /**
  *  @apiGroup Card
