@@ -3,16 +3,22 @@ const { ObjectId } = require('mongoose').Types;
 const isLength = require('validator/lib/isLength');
 const isEmpty = require('../../utils/is-empty');
 
-exports.validateRegisterInput = (data, mimetype) => {
+exports.validateRegisterInput = (data, file) => {
   const errors = {};
+  let mimetype;
 
-  mimetype = mimetype.split('/')[1];
   data.title = !isEmpty(data.title) ? data.title : '';
   data.description = !isEmpty(data.description) ? data.description : '';
   data.user = !isEmpty(data.user) ? data.user : '';
 
-  if (!['jpg', 'jpeg', 'png'].includes(mimetype)) {
-    errors.image = 'Tipo de arquivo inválido';
+  if (isEmpty(file)) {
+    errors.image = 'O campo imagem não pode ser vazio';
+  } else {
+    mimetype = mimetype.split('/')[1];
+
+    if (!['jpg', 'jpeg', 'png'].includes(mimetype)) {
+      errors.image = 'Tipo de arquivo inválido';
+    }
   }
 
   if (!isLength(data.title, { min: 2, max: 40 })) {

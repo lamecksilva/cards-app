@@ -13,7 +13,7 @@ const logger = require('../../utils/logger');
 exports.registerCard = (req, res) => {
   // Validando campos do body
   console.log(req.file);
-  const { isValid, errors } = validation.validateRegisterInput(req.body, req.file.mimetype);
+  const { isValid, errors } = validation.validateRegisterInput(req.body, req.file);
 
   if (!isValid) {
     return res.status(400).json({ success: false, errors });
