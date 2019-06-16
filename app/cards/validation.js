@@ -15,8 +15,8 @@ exports.validateRegisterInput = (data, mimetype) => {
     errors.image = 'Tipo de arquivo inválido';
   }
 
-  if (!isLength(data.title, { min: 2, max: 25 })) {
-    errors.title = 'O titulo deve conter entre 2 e 25 caracteres';
+  if (!isLength(data.title, { min: 2, max: 40 })) {
+    errors.title = 'O titulo deve conter entre 2 e 40 caracteres';
   }
   if (isEmpty(data.title)) {
     errors.title = 'O campo titulo não pode ser vazio';
@@ -49,8 +49,8 @@ exports.validateUpdateInput = (data) => {
     errors.user = 'Não se pode mudar o criador do card';
   }
 
-  if (!isLength(data.title, { min: 2, max: 25 })) {
-    errors.title = 'O titulo deve conter entre 2 e 25 caracteres';
+  if (!isLength(data.title, { min: 2, max: 40 })) {
+    errors.title = 'O titulo deve conter entre 2 e 40 caracteres';
   }
   if (isEmpty(data.title)) {
     errors.title = 'O campo titulo não pode ser vazio';
@@ -64,8 +64,8 @@ exports.validateUpdateInput = (data) => {
   }
 
   // if (!isEmpty(data.title)) {
-  //   if (!isLength(data.title, { min: 2, max: 25 })) {
-  //     errors.title = 'O titulo deve conter entre 2 e 25 caracteres';
+  //   if (!isLength(data.title, { min: 2, max: 40 })) {
+  //     errors.title = 'O titulo deve conter entre 2 e 40 caracteres';
   //   }
   // }
 
