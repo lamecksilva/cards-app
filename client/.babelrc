@@ -1,15 +1,16 @@
 {
-	"presets": ["@babel/preset-env", "@babel/preset-react"],
+  "presets": ["@babel/preset-env", "@babel/preset-react"],
 
-	// Plugin babel-plugin-module-resolver para "apelidar"
-	"plugins": [
-		[
-			"module-resolver",
-			{
-				"alias": {
-					"@": "./src"
-				}
-			}
-		]
-	]
+  "plugins": [
+    "@babel/plugin-proposal-class-properties",
+    // Plugin babel-plugin-module-resolver para "apelidar"
+    [
+      "module-resolver",
+      {
+        "alias": {
+          "@": "./src"
+        }
+      }
+    ]
+  ]
 }

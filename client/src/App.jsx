@@ -17,6 +17,7 @@ import Navbar from './components/Navbar';
 import Register from './containers/Register';
 import Login from './containers/Login';
 import CriarCard from './containers/CriarCard';
+import EditCard from './containers/EditCard';
 
 if (localStorage.jwtToken) {
   setAuthToken(localStorage.jwtToken);
@@ -49,6 +50,10 @@ const App = () => (
 
         <Switch>
           <PrivateRoute exact path="/criar-card" component={CriarCard} />
+        </Switch>
+
+        <Switch>
+          <PrivateRoute exact path="/edit-card/:id" component={EditCard} />
         </Switch>
       </Router>
     </ThemeProvider>
