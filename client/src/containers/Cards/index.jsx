@@ -12,7 +12,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import CardItem from '@/components/CardItem';
 import withTitle from '@/components/withTitle';
 
-import { getCards } from './actions';
+import { getCards, deleteCard } from './actions';
 import styles from './styles';
 
 class Cards extends Component {
@@ -26,6 +26,14 @@ class Cards extends Component {
     e.preventDefault();
 
     this.props.history.push(`/edit-card/${id}`);
+  };
+
+  handleDelete = id => e => {
+    e.preventDefault();
+
+    if (window.confirm('Deseja apagar este card?')) {
+      this.props.deleteCard(id);
+    }
   };
 
   render() {
@@ -60,7 +68,12 @@ class Cards extends Component {
           <Grid container spacing={4} className="mt-3 mb-3">
             {cards.map(item => (
               <Grid item xs={12} sm={6} md={4} lg={4} xl={4} key={item._id}>
-                <CardItem data={item} user={item.user} handleEdit={this.handleEdit} />
+                <CardItem
+                  data={item}
+                  user={item.user}
+                  handleEdit={this.handleEdit}
+                  handleDelete={this.handleDelete}
+                />
               </Grid>
             ))}
           </Grid>
@@ -82,6 +95,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
   getCards,
+  deleteCard,
 };
 
 export default connect(

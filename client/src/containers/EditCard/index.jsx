@@ -18,7 +18,7 @@ import { withRouter } from 'react-router';
 
 import styles from './styles';
 import CardItem from '@/components/CardItem';
-import { getCardById, updateData } from './actions';
+import { getCardById, updateData, deleteCard } from './actions';
 import withTitle from '@/components/withTitle';
 
 class EditCard extends Component {
@@ -37,6 +37,7 @@ class EditCard extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleImageChange = this.handleImageChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
   componentDidMount() {
@@ -75,18 +76,24 @@ class EditCard extends Component {
     this.props.updateData(match.params.id, this.state, history);
   }
 
+  handleDelete = id => e => {
+    e.preventDefault();
+    const { history, match } = this.props;
+
+    if (window.confirm('Deseja deletar este card?')) {
+      this.props.deleteCard(match.params.id, history);
+    }
+  };
+
   render() {
-    const {
-      classes, user, getCardError, errors, getCardLoading, editCardLoading,
-    } = this.props;
+    const { classes, user, getCardError, errors, getCardLoading, editCardLoading } = this.props;
 
     if (getCardError) {
       return (
         <Container>
           <Paper className={classes.root}>
             <Typography component="h4" variant="h4" align="center" className="mt-3 mb-3">
-              Erro ao buscar Card no banco de dados:
-              {' '}
+              Erro ao buscar Card no banco de dados:{' '}
               <Typography component="h5" variant="h5">
                 {getCardError.id}
               </Typography>
@@ -172,7 +179,13 @@ class EditCard extends Component {
                 </Typography>
 
                 <Grid item xs={12} sm={8} className={classes.cardContainer}>
-                  <CardItem edit data={this.state} user={user} image={this.state.newImage} />
+                  <CardItem
+                    edit
+                    data={this.state}
+                    user={user}
+                    image={this.state.newImage}
+                    handleDelete={this.handleDelete}
+                  />
                 </Grid>
               </Grid>
             </Grid>
@@ -183,11 +196,9 @@ class EditCard extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   const { user } = state.Login;
-  const {
-    card, getCardError, errors, getCardLoading, editCardLoading,
-  } = state.EditCard;
+  const { card, getCardError, errors, getCardLoading, editCardLoading } = state.EditCard;
 
   return {
     user,
@@ -202,6 +213,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   getCardById,
   updateData,
+  deleteCard,
 };
 
 export default connect(

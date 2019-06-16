@@ -24,3 +24,16 @@ export const getCards = () => (dispatch) => {
       });
     });
 };
+
+export const deleteCard = id => (dispatch) => {
+  axios
+    .delete(`/api/cards/${id}`)
+    .then((response) => {
+      console.log(response.data);
+
+      dispatch(getCards());
+    })
+    .catch((error) => {
+      console.log(error.response.data);
+    });
+};
