@@ -79,3 +79,16 @@ export const updateData = (id, data, history) => (dispatch) => {
       });
   }
 };
+
+export const deleteCard = (id, history) => (dispatch) => {
+  axios
+    .delete(`/api/cards/${id}`)
+    .then((response) => {
+      console.log(response.data);
+
+      history.push('/');
+    })
+    .catch((error) => {
+      console.log(error.response.data);
+    });
+};
