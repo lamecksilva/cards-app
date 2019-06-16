@@ -161,7 +161,7 @@ exports.updateImage = (req, res) => {
 
   console.log(req.file)
   
-  const { isValid, errors } = validation.validateImageInput(req.file.mimetype);
+  const { isValid, errors } = validation.validateImageInput(req.file);
 
   if (!isValid) {
     return res.status(400).json({ success: false, errors });

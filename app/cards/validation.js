@@ -14,7 +14,7 @@ exports.validateRegisterInput = (data, file) => {
   if (isEmpty(file)) {
     errors.image = 'O campo imagem não pode ser vazio';
   } else {
-    mimetype = mimetype.split('/')[1];
+    mimetype = file.mimetype.split('/')[1];
 
     if (!['jpg', 'jpeg', 'png'].includes(mimetype)) {
       errors.image = 'Tipo de arquivo inválido';
@@ -87,17 +87,18 @@ exports.validateUpdateInput = (data) => {
   };
 };
 
-exports.validateImageInput = (mimetype) => {
+exports.validateImageInput = (file) => {
   const errors = {};
-
-  mimetype = mimetype.split('/')[1];
-
-  if (!['jpg', 'jpeg', 'png'].includes(mimetype)) {
-    errors.image = 'Tipo de arquivo inválido, tipos válidos: [.jpg, .jpeg, .png]';
-  }
+  let mimetype;
 
   if (isEmpty(mimetype)) {
-    errors.image = 'Uma imagem é necessária';
+    errors.image = 'O campo imagem não pode ser vazio';
+  } else {
+    mimetype = file.mimetype.split('/')[1];
+
+    if (!['jpg', 'jpeg', 'png'].includes(mimetype)) {
+      errors.image = 'Tipo de arquivo inválido, tipos válidos: [.jpg, .jpeg, .png]';
+    }
   }
 
   return {
