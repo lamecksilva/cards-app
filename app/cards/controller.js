@@ -236,6 +236,8 @@ exports.deleteCard = (req, res) => {
 
         index !== 1 && user.cards.splice(index, 1);
 
+        logger.info(`Removendo card ${id}`)
+
         user
           .save()
           .then(c => res.status(200).json({ success: true, card }))
