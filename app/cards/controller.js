@@ -13,7 +13,7 @@ const logger = require('../../utils/logger');
 exports.registerCard = (req, res) => {
   // Validando campos do body
   console.log(req.file);
-  const { isValid, errors } = validation.validateRegisterInput(req.body, req.file.mimetype);
+  const { isValid, errors } = validation.validateRegisterInput(req.body, req.file);
 
   if (!isValid) {
     return res.status(400).json({ success: false, errors });
@@ -161,7 +161,7 @@ exports.updateImage = (req, res) => {
 
   console.log(req.file)
   
-  const { isValid, errors } = validation.validateImageInput(req.file.mimetype);
+  const { isValid, errors } = validation.validateImageInput(req.file);
 
   if (!isValid) {
     return res.status(400).json({ success: false, errors });
@@ -235,6 +235,8 @@ exports.deleteCard = (req, res) => {
         const index = user.cards.indexOf(card._doc._id);
 
         index !== 1 && user.cards.splice(index, 1);
+
+        logger.info(`Removendo card ${id}`)
 
         user
           .save()
