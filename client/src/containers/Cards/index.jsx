@@ -31,8 +31,10 @@ class Cards extends Component {
   handleDelete = id => e => {
     e.preventDefault();
 
-    this.props.deleteCard(id, this.props.history)
-  }
+    if (window.confirm('Deseja apagar este card?')) {
+      this.props.deleteCard(id);
+    }
+  };
 
   render() {
     const { cards, error, loading, classes } = this.props;
@@ -66,7 +68,12 @@ class Cards extends Component {
           <Grid container spacing={4} className="mt-3 mb-3">
             {cards.map(item => (
               <Grid item xs={12} sm={6} md={4} lg={4} xl={4} key={item._id}>
-                <CardItem data={item} user={item.user} handleEdit={this.handleEdit} handleDelete={this.handleDelete} />
+                <CardItem
+                  data={item}
+                  user={item.user}
+                  handleEdit={this.handleEdit}
+                  handleDelete={this.handleDelete}
+                />
               </Grid>
             ))}
           </Grid>
@@ -87,7 +94,8 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-  getCards, deleteCard
+  getCards,
+  deleteCard,
 };
 
 export default connect(
