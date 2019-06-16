@@ -18,7 +18,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import styles from './styles';
 
 const CardItem = ({
-  data, user, classes, image, handleEdit, create, edit,
+  data, user, classes, image, handleEdit, handleDelete, create, edit,
 }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -47,7 +47,9 @@ const CardItem = ({
               {edit === true || create === true ? null : (
                 <MenuItem onClick={handleEdit(data._id)}>Editar</MenuItem>
               )}
-              <MenuItem onClick={handleClose}>Excluir</MenuItem>
+              {create === true ? null : (
+                <MenuItem onClick={handleDelete(data._id)}>Excluir</MenuItem>
+              )}
             </Menu>
           </div>
 )}
