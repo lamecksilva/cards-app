@@ -16,6 +16,7 @@ import { connect } from 'react-redux';
 
 import styles from './styles';
 import { registerUser } from './actions';
+import withTitle from '@/components/withTitle';
 
 class Register extends Component {
   constructor(props) {
@@ -132,4 +133,8 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(withStyles(styles, { withTheme: true })(Register));
+)(
+  withStyles(styles, { withTheme: true })(
+    withTitle({ component: Register, title: 'Cadastrar card' }),
+  ),
+);

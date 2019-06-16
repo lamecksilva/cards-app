@@ -16,7 +16,8 @@ import { withStyles } from '@material-ui/styles';
 import { connect } from 'react-redux';
 
 import styles from './styles';
-import CardItem from '../../components/CardItem';
+import CardItem from '@/components/CardItem';
+import withTitle from '@/components/withTitle';
 import { createCard } from './actions';
 
 class CriarCard extends Component {
@@ -156,4 +157,6 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(withStyles(styles, { withTheme: true })(CriarCard));
+)(
+  withStyles(styles, { withTheme: true })(withTitle({ component: CriarCard, title: 'Criar Card' })),
+);

@@ -17,6 +17,7 @@ import { Redirect } from 'react-router-dom';
 
 import styles from './styles';
 import { loginUser } from './actions';
+import withTitle from '@/components/withTitle';
 
 class Login extends Component {
   constructor(props) {
@@ -117,4 +118,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(withStyles(styles, { withTheme: true })(Login));
+)(withStyles(styles, { withTheme: true })(withTitle({ component: Login, title: 'Login' })));
