@@ -38,7 +38,7 @@ export const updateData = (id, data, history) => (dispatch) => {
     formData.append('image', data.imageFile);
 
     axios
-      .patch(`/api/cards/update/${id}`, { title: data.title, description: data.description })
+      .put(`/api/cards/update/${id}`, { title: data.title, description: data.description })
       .then((response) => {
         axios
           .put(`/api/cards/update-image/${id}`, formData, {
@@ -52,6 +52,19 @@ export const updateData = (id, data, history) => (dispatch) => {
           .catch((err) => {
             console.log(err.response);
           });
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
+  } else {
+    axios
+      .put(`/api/cards/update/${id}`, { title: data.title, description: data.description })
+      .then((response) => {
+        dispatch({
+          type: EDIT_CARD_SUCCESS,
+        });
+
+        history.push('/');
       })
       .catch((err) => {
         console.log(err.response);

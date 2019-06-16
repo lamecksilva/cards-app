@@ -125,6 +125,8 @@ exports.getCard = (req, res) => {
 exports.editCard = (req, res) => {
   const { id } = req.params;
 
+  console.log(req.body)
+
   const { isValid, errors } = validation.validateUpdateInput(req.body);
 
   if (!isValid) {

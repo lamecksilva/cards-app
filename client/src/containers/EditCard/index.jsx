@@ -81,7 +81,6 @@ class EditCard extends Component {
       return (
         <Container>
           <Paper className={classes.root}>
-
           <Typography component="h4" variant="h4" align="center" className="mt-3 mb-3">
             Erro ao buscar Card no banco de dados: <Typography component="h5" variant="h5" >{getCardError.id}</Typography>
           </Typography>
