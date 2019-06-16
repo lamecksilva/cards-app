@@ -40,21 +40,27 @@ export const updateData = (id, data, history) => (dispatch) => {
     axios
       .put(`/api/cards/update/${id}`, { title: data.title, description: data.description })
       .then((response) => {
-        axios
-          .put(`/api/cards/update-image/${id}`, formData, {
-            headers: { 'Content-Type': 'multipart/form-data' },
-          })
-          .then((res) => {
-            dispatch({ type: EDIT_CARD_SUCCESS });
-
-            history.push('/');
-          })
-          .catch((err) => {
-            console.log(err.response);
-          });
+        console.log(response.data);
       })
       .catch((err) => {
-        console.log(err.response);
+        console.log(err.response.data);
+
+        dispatch({ type: EDIT_CARD_FAILURE, payload: err.response.data.errors });
+      });
+
+    axios
+      .put(`/api/cards/update-image/${id}`, formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      })
+      .then((res) => {
+        dispatch({ type: EDIT_CARD_SUCCESS });
+
+        history.push('/');
+      })
+      .catch((err) => {
+        console.log(err.response.data);
+
+        dispatch({ type: EDIT_CARD_FAILURE, payload: err.response.data.errors });
       });
   } else {
     axios
@@ -67,7 +73,9 @@ export const updateData = (id, data, history) => (dispatch) => {
         history.push('/');
       })
       .catch((err) => {
-        console.log(err.response);
+        console.log(err.response.data);
+
+        dispatch({ type: EDIT_CARD_FAILURE, payload: err.response.data.errors });
       });
   }
 };

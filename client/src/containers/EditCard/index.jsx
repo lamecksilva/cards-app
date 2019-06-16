@@ -74,8 +74,7 @@ class EditCard extends Component {
   }
 
   render() {
-    const { classes, user, card, getCardError } = this.props;
-    const errors = {};
+    const { classes, user, getCardError, errors } = this.props;
 
     if (getCardError){
       return (
@@ -166,12 +165,13 @@ class EditCard extends Component {
 
 const mapStateToProps = (state) => {
   const { user } = state.Login;
-  const { card, getCardError } = state.EditCard;
+  const { card, getCardError, errors } = state.EditCard;
 
   return {
     user,
     card,
-    getCardError
+    getCardError,
+    errors
   };
 };
 
