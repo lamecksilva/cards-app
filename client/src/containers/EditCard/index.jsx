@@ -17,8 +17,9 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
 import styles from './styles';
-import CardItem from '../../components/CardItem';
+import CardItem from '@/components/CardItem';
 import { getCardById, updateData } from './actions';
+import withTitle from '@/components/withTitle';
 
 class EditCard extends Component {
   constructor(props) {
@@ -206,4 +207,6 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(withStyles(styles, { withTheme: true })(EditCard));
+)(
+  withStyles(styles, { withTheme: true })(withTitle({ component: EditCard, title: 'Editar card' })),
+);

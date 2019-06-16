@@ -10,6 +10,7 @@ import Divider from '@material-ui/core/Divider';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 import CardItem from '@/components/CardItem';
+import withTitle from '@/components/withTitle';
 
 import { getCards } from './actions';
 import styles from './styles';
@@ -86,4 +87,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(withStyles(styles)(Cards));
+)(withStyles(styles)(withTitle({ component: Cards, title: 'Cards' })));
