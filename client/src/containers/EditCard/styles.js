@@ -14,6 +14,10 @@ const styles = {
   cardContainer: {
     margin: '0 auto 2vh',
   },
+  spinner: {
+    width: '50%',
+    height: '50%',
+  },
 };
 
 export default styles;

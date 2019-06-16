@@ -10,6 +10,7 @@ import {
   FormHelperText,
   Divider,
   Button,
+  CircularProgress,
 } from '@material-ui/core';
 import { withStyles } from '@material-ui/styles';
 import { connect } from 'react-redux';
@@ -50,7 +51,7 @@ class CriarCard extends Component {
     const { history } = this.props;
     const formData = new FormData();
 
-    console.log(this.state)
+    console.log(this.state);
 
     formData.append('image', this.state.imageFile);
     formData.append('title', this.state.title);
@@ -106,8 +107,21 @@ class CriarCard extends Component {
                   </FormHelperText>
                 </FormControl>
 
-                <Button color="secondary" variant="contained" className="mt-3" fullWidth onClick={this.handleSubmit}>
-                  Confirmar
+                <Button
+                  color="secondary"
+                  variant="contained"
+                  className="mt-3"
+                  fullWidth
+                  onClick={this.handleSubmit}
+                >
+                  {loading === true ? (
+                    <Grid container direction="row" justify="center">
+                      <Typography>Confirmar</Typography>
+                      <CircularProgress size={25} className="ml-2" color="inherit" />
+                    </Grid>
+                  ) : (
+                    <Typography>Confirmar</Typography>
+                  )}
                 </Button>
               </Grid>
             </Grid>
@@ -118,7 +132,7 @@ class CriarCard extends Component {
               </Typography>
 
               <Grid item xs={12} sm={8} className={classes.cardContainer}>
-                <CardItem  create user={user} data={this.state} image={this.state.image} />
+                <CardItem create user={user} data={this.state} image={this.state.image} />
               </Grid>
             </Grid>
           </Grid>
