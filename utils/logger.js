@@ -1,9 +1,11 @@
 const winston = require('winston');
 const fs = require('fs');
 
+const formatTime = require('../utils/format-time');
+
 const { format } = winston;
 
-const logDir = 'log';
+const logDir = `log/${formatTime(new Date())}`;
 
 if (!fs.existsSync(logDir)) {
   fs.mkdirSync(logDir);
