@@ -31,6 +31,8 @@ class Cards extends Component {
   handleDelete = id => e => {
     e.preventDefault();
 
+    console.log(id)
+
     if (window.confirm('Deseja apagar este card?')) {
       this.props.deleteCard(id);
     }
