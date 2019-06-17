@@ -5,5 +5,4 @@ const formatTime = (date) => {
   return `${hour}:${minute}`;
 };
 
-// console.log(formatTime(new Date()));
 module.exports = formatTime;
