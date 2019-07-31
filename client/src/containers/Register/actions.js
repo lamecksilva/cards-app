@@ -19,7 +19,7 @@ export const registerUser = (data, history) => (dispatch) => {
       });
       console.log(response.data);
 
-      history.push('/');
+      history.push('/login');
     })
     .catch((error) => {
       console.log(error.response);

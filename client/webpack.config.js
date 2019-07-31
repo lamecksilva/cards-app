@@ -9,7 +9,8 @@ module.exports = {
         // A propriedade 'test' identifica os arquivos que serão transformados
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        // E a propriedade 'use', indica qual "loader" o webpack vai usar para a transformação dos arquivos
+        // E a propriedade 'use', indica qual "loader" o webpack vai usar para a
+        // transformação dos arquivos
         use: {
           loader: 'babel-loader',
         },
@@ -44,12 +45,9 @@ module.exports = {
     historyApiFallback: true,
     port: 3000,
     proxy: {
-      '/api': {
-        target: {
-          host: 'server',
-          protocol: 'http:',
-          port: 9000,
-        },
+      '/api/**': {
+        changeOrigin: true,
+        target: 'http://localhost:9000/',
       },
     },
   },

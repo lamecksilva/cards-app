@@ -3,12 +3,21 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const path = require('path');
+const morgan = require('morgan');
+const cors = require('cors');
 
 const config = require('./config');
 const logger = require('./utils/logger');
 
 // Instanciando o objeto express
 const app = express();
+
+app.use(cors());
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms'));
+app.use(bodyParser.json());
+app.use('/api/images', express.static('images'));
+app.use('/log', express.static('log'));
+app.use(passport.initialize());
 
 // Conectando o mongodb a nossa aplicacao
 setTimeout(
@@ -18,11 +27,6 @@ setTimeout(
     .catch(err => logger.error(err)),
   2000,
 );
-
-app.use(bodyParser.json());
-app.use('/api/images', express.static('images'));
-app.use('/log', express.static('log'));
-app.use(passport.initialize());
 
 // Aplicando middlewares do passport para autenticacao de rotas
 require('./utils/passport')(passport);
